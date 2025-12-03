@@ -8,19 +8,32 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <style>
+        :root {
+            /* 流光紫主题色 */
+            --primary-purple: #9333ea;
+            --secondary-purple: #7e22ce;
+            --accent-purple: #a855f7;
+            --light-purple: #c084fc;
+            --dark-purple: #6b21a8;
+            --glow-purple: rgba(147, 51, 234, 0.5);
+            --bg-dark: #000000;
+            --text-light: #e2e8f0;
+            --text-gray: #94a3b8;
+        }
+        
         body {
             font-family: 'Noto Sans SC', sans-serif;
-            background-color: #f8fafc;
-            color: #1e293b;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
             overflow-x: hidden;
         }
 
         .glassmorphism {
-            background: rgba(255, 255, 255, 0.7);
+            background: rgba(10, 10, 20, 0.7);
             backdrop-filter: blur(10px);
             border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+            border: 1px solid var(--glow-purple);
+            box-shadow: 0 8px 32px 0 var(--glow-purple);
         }
 
         .card-hover {
@@ -29,12 +42,13 @@
 
         .card-hover:hover {
             transform: translateY(-5px);
-            box-shadow: 0 12px 28px 0 rgba(31, 38, 135, 0.15);
+            box-shadow: 0 12px 28px 0 var(--glow-purple);
         }
 
         .highlight-text {
             position: relative;
             display: inline-block;
+            text-shadow: 0 0 10px var(--glow-purple), 0 0 20px rgba(147, 51, 234, 0.3);
         }
 
         .highlight-text::after {
@@ -44,16 +58,51 @@
             left: 0;
             width: 100%;
             height: 8px;
-            background-color: rgba(59, 130, 246, 0.2);
+            background: linear-gradient(90deg, rgba(147, 51, 234, 0.4), rgba(168, 85, 247, 0.4));
             z-index: -1;
+            box-shadow: 0 0 15px var(--glow-purple);
+        }
+        
+        /* 科技感发光效果 */
+        .glow {
+            text-shadow: 0 0 10px rgba(147, 51, 234, 0.8), 0 0 20px rgba(147, 51, 234, 0.5), 0 0 30px rgba(147, 51, 234, 0.3);
+        }
+        
+        .neon-border {
+            box-shadow: 0 0 10px rgba(147, 51, 234, 0.5), inset 0 0 10px rgba(147, 51, 234, 0.1);
+            border: 1px solid rgba(147, 51, 234, 0.5);
+        }
+        
+        /* 科技感背景网格 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(147, 51, 234, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(147, 51, 234, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            animation: gridMove 20s linear infinite;
+        }
+        
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
         }
 
         .stat-card {
             transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(147, 51, 234, 0.2);
+            border: 1px solid rgba(147, 51, 234, 0.3);
         }
 
         .stat-card:hover {
             transform: scale(1.02);
+            box-shadow: 0 0 25px rgba(147, 51, 234, 0.4), 0 0 40px rgba(147, 51, 234, 0.2);
         }
 
         .data-pill {
@@ -62,18 +111,27 @@
             border-radius: 16px;
             font-size: 14px;
             font-weight: 500;
-            background: rgba(59, 130, 246, 0.1);
-            color: #3b82f6;
+            background: linear-gradient(135deg, rgba(147, 51, 234, 0.2), rgba(168, 85, 247, 0.2));
+            color: #c084fc;
             margin-right: 8px;
             margin-bottom: 8px;
+            border: 1px solid rgba(147, 51, 234, 0.3);
+            box-shadow: 0 0 10px rgba(147, 51, 234, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .data-pill:hover {
+            background: linear-gradient(135deg, rgba(147, 51, 234, 0.3), rgba(168, 85, 247, 0.3));
+            box-shadow: 0 0 15px rgba(147, 51, 234, 0.4);
+            transform: translateY(-2px);
         }
 
         .bg-gradient-primary {
-            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            background: linear-gradient(135deg, var(--primary-purple) 0%, var(--secondary-purple) 100%);
         }
 
         .shadow-glow {
-            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.5);
+            box-shadow: 0 10px 25px -5px rgba(147, 51, 234, 0.5);
         }
 
         /* 移动端导航菜单样式 */
@@ -85,10 +143,10 @@
             padding: 1rem;
             margin: 0.5rem;
             border-radius: 0.75rem;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(10, 10, 20, 0.95);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            border: 1px solid rgba(147, 51, 234, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(147, 51, 234, 0.2);
             transform-origin: top;
             transform: scaleY(0);
             opacity: 0;
@@ -108,11 +166,12 @@
             margin-bottom: 0.5rem;
             font-weight: 500;
             transition: all 0.2s ease;
+            color: var(--text-light);
         }
 
         .mobile-menu a:hover, .mobile-menu a:focus {
-            background-color: rgba(59, 130, 246, 0.1);
-            color: #3b82f6;
+            background-color: rgba(147, 51, 234, 0.2);
+            color: var(--light-purple);
         }
 
         .team-card {
@@ -133,23 +192,45 @@
 
         .feature-icon {
             transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(147, 51, 234, 0.3);
         }
 
         .feature-card:hover .feature-icon {
             transform: scale(1.1);
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+            box-shadow: 0 0 30px rgba(147, 51, 234, 0.6), 0 0 45px rgba(147, 51, 234, 0.3);
+        }
+        
+        .feature-card {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(147, 51, 234, 0.1), transparent);
+            transition: left 0.5s ease;
+            z-index: 0;
+        }
+        
+        .feature-card:hover::before {
+            left: 100%;
         }
 
         .timeline-dot {
             width: 12px;
             height: 12px;
             border-radius: 50%;
-            background-color: #3b82f6;
+            background-color: var(--primary-purple);
         }
 
         .timeline-line {
             width: 2px;
-            background-color: #e2e8f0;
+            background-color: rgba(147, 51, 234, 0.3);
         }
 
         /* 技术架构卡片样式 */
@@ -158,18 +239,22 @@
             height: 100%;
             display: flex;
             flex-direction: column;
+            border: 1px solid rgba(147, 51, 234, 0.3);
+            box-shadow: 0 0 20px rgba(147, 51, 234, 0.15);
         }
 
         .tech-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.15);
+            box-shadow: 0 15px 30px rgba(147, 51, 234, 0.3), 0 0 50px rgba(147, 51, 234, 0.15);
+            border-color: rgba(147, 51, 234, 0.6);
         }
 
         .tech-image-container {
             overflow: hidden;
             border-radius: 12px;
             margin-bottom: 1rem;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 20px rgba(147, 51, 234, 0.2);
+            border: 1px solid rgba(147, 51, 234, 0.4);
         }
 
         .tech-image {
@@ -197,74 +282,105 @@
     </style>
 </head>
 <body class="min-h-screen">
+    <!-- 粒子特效背景 -->
+    <canvas id="particles" class="fixed top-0 left-0 w-full h-full z-0"></canvas>
+    
     <!-- 导航条 -->
     <nav class="glassmorphism sticky top-0 z-50 p-4 mb-8" id="mainNav">
         <div class="container mx-auto flex items-center justify-between">
-            <div class="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 text-transparent bg-clip-text">
+            <div class="text-xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 text-transparent bg-clip-text drop-shadow-[0_0_10px_rgba(147,51,234,0.5)]">
                 <i class="fas fa-brain mr-2"></i>Vision Flow
             </div>
-            <div class="hidden md:flex space-x-6">
-                <a href="#overview" class="text-gray-600 hover:text-blue-600 transition-colors">项目概述</a>
-                <a href="#why" class="text-gray-600 hover:text-blue-600 transition-colors">为什么做</a>
-                <a href="#features" class="text-gray-600 hover:text-blue-600 transition-colors">功能模块</a>
-                <a href="#tech-architecture" class="text-gray-600 hover:text-blue-600 transition-colors">技术架构</a>
-                <a href="#scenes" class="text-gray-600 hover:text-blue-600 transition-colors">适用场景</a>
-                <a href="#team" class="text-gray-600 hover:text-blue-600 transition-colors">团队介绍</a>
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="#overview" class="text-gray-400 hover:text-purple-400 transition-colors">项目概述</a>
+                <a href="#why" class="text-gray-400 hover:text-purple-400 transition-colors">为什么做</a>
+                <a href="#features" class="text-gray-400 hover:text-purple-400 transition-colors">功能模块</a>
+                <a href="#tech-architecture" class="text-gray-400 hover:text-purple-400 transition-colors">技术架构</a>
+                <a href="#scenes" class="text-gray-400 hover:text-purple-400 transition-colors">适用场景</a>
+                <a href="#team" class="text-gray-400 hover:text-purple-400 transition-colors">团队介绍</a>
+                
+                <!-- 语言切换按钮 -->
+                <div class="relative">
+                    <button id="languageToggle" class="flex items-center space-x-2 text-gray-400 hover:text-purple-400 transition-colors">
+                        <i class="fas fa-globe"></i>
+                        <span>中文</span>
+                        <i class="fas fa-chevron-down text-xs"></i>
+                    </button>
+                    <div id="languageMenu" class="absolute right-0 mt-2 w-32 glassmorphism py-2 rounded-lg hidden">
+                        <button class="language-option w-full text-left px-4 py-2 text-sm hover:bg-purple-900/30 rounded transition-colors" data-lang="zh">中文</button>
+                        <button class="language-option w-full text-left px-4 py-2 text-sm hover:bg-purple-900/30 rounded transition-colors" data-lang="ru">Русский</button>
+                        <button class="language-option w-full text-left px-4 py-2 text-sm hover:bg-purple-900/30 rounded transition-colors" data-lang="en">English</button>
+                    </div>
+                </div>
             </div>
-            <button class="md:hidden text-gray-600 focus:outline-none" id="mobileMenuButton" aria-label="导航菜单">
-                <i class="fas fa-bars"></i>
-            </button>
+            <div class="flex items-center">
+                <button class="md:hidden text-gray-400 focus:outline-none mr-4" id="mobileMenuButton" aria-label="导航菜单">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <!-- 移动端语言切换 -->
+                <button id="mobileLanguageToggle" class="md:hidden text-gray-400 focus:outline-none" aria-label="语言切换">
+                    <i class="fas fa-globe"></i>
+                </button>
+            </div>
 
             <!-- 移动端导航菜单 -->
             <div class="mobile-menu md:hidden" id="mobileMenu">
-                <a href="#overview" class="text-gray-600 hover:text-blue-600 transition-colors flex items-center">
-                    <i class="fas fa-info-circle mr-3 text-blue-500"></i>项目概述
+                <a href="#overview" class="text-gray-400 hover:text-purple-400 transition-colors flex items-center">
+                    <i class="fas fa-info-circle mr-3 text-purple-400"></i>项目概述
                 </a>
-                <a href="#why" class="text-gray-600 hover:text-blue-600 transition-colors flex items-center">
-                    <i class="fas fa-exclamation-circle mr-3 text-blue-500"></i>为什么做
+                <a href="#why" class="text-gray-400 hover:text-purple-400 transition-colors flex items-center">
+                    <i class="fas fa-exclamation-circle mr-3 text-purple-400"></i>为什么做
                 </a>
-                <a href="#features" class="text-gray-600 hover:text-blue-600 transition-colors flex items-center">
-                    <i class="fas fa-cubes mr-3 text-blue-500"></i>功能模块
+                <a href="#features" class="text-gray-400 hover:text-purple-400 transition-colors flex items-center">
+                    <i class="fas fa-cubes mr-3 text-purple-400"></i>功能模块
                 </a>
-                <a href="#tech-architecture" class="text-gray-600 hover:text-blue-600 transition-colors flex items-center">
-                    <i class="fas fa-sitemap mr-3 text-blue-500"></i>技术架构
+                <a href="#tech-architecture" class="text-gray-400 hover:text-purple-400 transition-colors flex items-center">
+                    <i class="fas fa-sitemap mr-3 text-purple-400"></i>技术架构
                 </a>
-                <a href="#scenes" class="text-gray-600 hover:text-blue-600 transition-colors flex items-center">
-                    <i class="fas fa-lightbulb mr-3 text-blue-500"></i>适用场景
+                <a href="#scenes" class="text-gray-400 hover:text-purple-400 transition-colors flex items-center">
+                    <i class="fas fa-lightbulb mr-3 text-purple-400"></i>适用场景
                 </a>
-                <a href="#team" class="text-gray-600 hover:text-blue-600 transition-colors flex items-center">
-                    <i class="fas fa-users mr-3 text-blue-500"></i>团队介绍
+                <a href="#team" class="text-gray-400 hover:text-purple-400 transition-colors flex items-center">
+                    <i class="fas fa-users mr-3 text-purple-400"></i>团队介绍
                 </a>
+                <!-- 移动端语言切换菜单 -->
+                <div class="border-t border-purple-500/30 pt-4 mt-4">
+                    <div class="text-sm text-gray-500 mb-2 px-2">语言 / Language</div>
+                    <button class="language-option w-full text-left px-4 py-2 text-sm hover:bg-purple-900/30 rounded transition-colors text-gray-400" data-lang="zh">中文</button>
+                    <button class="language-option w-full text-left px-4 py-2 text-sm hover:bg-purple-900/30 rounded transition-colors text-gray-400" data-lang="ru">Русский</button>
+                    <button class="language-option w-full text-left px-4 py-2 text-sm hover:bg-purple-900/30 rounded transition-colors text-gray-400" data-lang="en">English</button>
+                </div>
             </div>
         </div>
     </nav>
 
     <!-- 头部横幅 -->
     <header class="container mx-auto py-16 px-4 md:px-8 relative overflow-hidden">
-        <div class="absolute -top-20 -right-20 w-96 h-96 bg-blue-500 rounded-full opacity-5 blur-3xl"></div>
-        <div class="absolute -bottom-20 -left-20 w-96 h-96 bg-indigo-500 rounded-full opacity-5 blur-3xl"></div>
+        <div class="absolute -top-20 -right-20 w-96 h-96 bg-purple-600 rounded-full opacity-10 blur-3xl"></div>
+        <div class="absolute -bottom-20 -left-20 w-96 h-96 bg-pink-600 rounded-full opacity-10 blur-3xl"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-600 rounded-full opacity-5 blur-3xl"></div>
         
         <div class="max-w-4xl mx-auto text-center relative z-10">
-            <h1 class="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-indigo-600 text-transparent bg-clip-text">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-600 to-pink-600 text-transparent bg-clip-text drop-shadow-[0_0_15px_rgba(147,51,234,0.6)]">
                 Vision Flow
             </h1>
-            <p class="text-xl md:text-2xl text-gray-600 mb-8">AI智能跨境电商工作流系统</p>
-            <div class="w-20 h-1 bg-blue-500 mx-auto mb-10"></div>
-            <p class="text-lg text-gray-700 mb-10">
+            <p class="text-xl md:text-2xl text-gray-300 mb-8">AI智能跨境电商工作流系统</p>
+            <div class="w-20 h-1 bg-gradient-to-r from-purple-600 to-pink-600 mx-auto mb-10"></div>
+            <p class="text-lg text-gray-400 mb-10">
                 首创跨境电商AI工作流引擎，通过选品、视觉生成、自动上架、智能客服、经营分析五大模块的全流程自动化，实现3人团队效率媲美传统10人团队。
             </p>
-            <div class="flex flex-wrap justify-center gap-4">
-                <div class="stat-card glassmorphism p-4 text-center w-36">
-                    <div class="text-sm text-gray-500">人力成本降低</div>
-                    <div class="text-2xl font-bold text-blue-600">70%</div>
+            <div class="flex flex-wrap justify-center gap-6">
+                <div class="stat-card glassmorphism p-6 text-center w-40">
+                    <div class="text-sm text-gray-400 mb-2">人力成本降低</div>
+                    <div class="text-3xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text drop-shadow-[0_0_10px_rgba(147,51,234,0.5)]">70%</div>
                 </div>
-                <div class="stat-card glassmorphism p-4 text-center w-36">
-                    <div class="text-sm text-gray-500">运营响应提升</div>
-                    <div class="text-2xl font-bold text-blue-600">3倍</div>
+                <div class="stat-card glassmorphism p-6 text-center w-40">
+                    <div class="text-sm text-gray-400 mb-2">运营响应提升</div>
+                    <div class="text-3xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text drop-shadow-[0_0_10px_rgba(147,51,234,0.5)]">3倍</div>
                 </div>
-                <div class="stat-card glassmorphism p-4 text-center w-36">
-                    <div class="text-sm text-gray-500">中期目标GMV</div>
-                    <div class="text-2xl font-bold text-blue-600">300万卢布</div>
+                <div class="stat-card glassmorphism p-6 text-center w-40">
+                    <div class="text-sm text-gray-400 mb-2">中期目标GMV</div>
+                    <div class="text-3xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 text-transparent bg-clip-text drop-shadow-[0_0_10px_rgba(147,51,234,0.5)]">300万卢布</div>
                 </div>
             </div>
         </div>
@@ -288,41 +404,41 @@
                     <h4 class="font-semibold text-lg mb-3 text-gray-700">核心价值：</h4>
                     <ul class="space-y-3 mb-6">
                         <li class="flex items-start">
-                            <div class="flex-shrink-0 w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mt-0.5 mr-3">
-                                <i class="fas fa-bolt text-xs"></i>
-                            </div>
-                            <div>
-                                <span class="font-medium">效率革命：</span>
-                                <span class="text-gray-600">AI全流程自动化使人力成本降低70%，运营响应速度提升3倍</span>
-                            </div>
-                        </li>
-                        <li class="flex items-start">
-                            <div class="flex-shrink-0 w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mt-0.5 mr-3">
-                                <i class="fas fa-lightbulb text-xs"></i>
-                            </div>
-                            <div>
-                                <span class="font-medium">模式创新：</span>
-                                <span class="text-gray-600">模块化工作流引擎适配多平台运营需求，支持俄语区主流电商平台无缝对接</span>
-                            </div>
-                        </li>
-                        <li class="flex items-start">
-                            <div class="flex-shrink-0 w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mt-0.5 mr-3">
-                                <i class="fas fa-chart-line text-xs"></i>
-                            </div>
-                            <div>
-                                <span class="font-medium">成长路径：</span>
-                                <span class="text-gray-600">从单一店铺运营到SaaS产品输出，构建跨境电商智能化服务生态</span>
-                            </div>
-                        </li>
+                        <div class="flex-shrink-0 w-6 h-6 rounded-full bg-purple-900/50 flex items-center justify-center text-purple-400 mt-0.5 mr-3">
+                            <i class="fas fa-bolt text-xs"></i>
+                        </div>
+                        <div>
+                            <span class="font-medium text-purple-300">效率革命：</span>
+                            <span class="text-gray-400">AI全流程自动化使人力成本降低70%，运营响应速度提升3倍</span>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <div class="flex-shrink-0 w-6 h-6 rounded-full bg-purple-900/50 flex items-center justify-center text-purple-400 mt-0.5 mr-3">
+                            <i class="fas fa-lightbulb text-xs"></i>
+                        </div>
+                        <div>
+                            <span class="font-medium text-purple-300">模式创新：</span>
+                            <span class="text-gray-400">模块化工作流引擎适配多平台运营需求，支持俄语区主流电商平台无缝对接</span>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <div class="flex-shrink-0 w-6 h-6 rounded-full bg-purple-900/50 flex items-center justify-center text-purple-400 mt-0.5 mr-3">
+                            <i class="fas fa-chart-line text-xs"></i>
+                        </div>
+                        <div>
+                            <span class="font-medium text-purple-300">成长路径：</span>
+                            <span class="text-gray-400">从单一店铺运营到SaaS产品输出，构建跨境电商智能化服务生态</span>
+                        </div>
+                    </li>
                     </ul>
                 </div>
-                <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 flex flex-col">
-                    <h4 class="font-semibold text-lg mb-4 text-gray-700 flex items-center">
-                        <i class="fas fa-desktop text-blue-600 mr-2"></i>
+                <div class="bg-gradient-to-br from-purple-900/30 to-pink-900/30 rounded-xl p-6 flex flex-col border border-purple-500/30 shadow-lg">
+                    <h4 class="font-semibold text-lg mb-4 text-purple-300 flex items-center">
+                        <i class="fas fa-desktop text-purple-400 mr-2 drop-shadow-[0_0_10px_rgba(147,51,234,0.5)]"></i>
                         双屏商品详情页对比
                     </h4>
                     <!-- 保留你的图片url -->
-                    <img src="./微信图片_2025-11-11_192537_950.png" alt="双屏商品详情页对比" class="responsive-image flex-grow">
+                    <img src="./微信图片_2025-11-11_192537_950.png" alt="双屏商品详情页对比" class="responsive-image flex-grow border border-purple-500/30 rounded-lg shadow-[0_0_20px_rgba(147,51,234,0.2)]">
              </div>
         </div>
     </section>
@@ -330,17 +446,17 @@
     <!-- 新增：为什么做 -->
     <section id="why" class="container mx-auto py-8 px-4 md:px-8">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-            <div class="glassmorphism p-6">
-                <h3 class="text-lg font-semibold mb-3 flex items-center"><i class="fas fa-language text-blue-500 mr-2"></i> 俄语内容难产</h3>
-                <p class="text-gray-600 text-sm">1688来的图是中文、卖点是中文，Ozon/WB 全要俄语，人工翻译+排版成本极高，易出错。</p>
+            <div class="glassmorphism p-6 border border-purple-500/30 shadow-lg hover:shadow-purple-500/20 transition-all duration-300">
+                <h3 class="text-lg font-semibold mb-3 flex items-center text-purple-300"><i class="fas fa-language text-purple-400 mr-2 drop-shadow-[0_0_8px_rgba(147,51,234,0.5)]"></i> 俄语内容难产</h3>
+                <p class="text-gray-400 text-sm">1688来的图是中文、卖点是中文，Ozon/WB 全要俄语，人工翻译+排版成本极高，易出错。</p>
             </div>
-            <div class="glassmorphism p-6">
-                <h3 class="text-lg font-semibold mb-3 flex items-center"><i class="fas fa-image text-blue-500 mr-2"></i> 图片不符合审美</h3>
-                <p class="text-gray-600 text-sm">原图有人物、还是东亚面孔，需要批量换成欧洲模特+统一底色/场景，普通ERP做不了。</p>
+            <div class="glassmorphism p-6 border border-purple-500/30 shadow-lg hover:shadow-purple-500/20 transition-all duration-300">
+                <h3 class="text-lg font-semibold mb-3 flex items-center text-purple-300"><i class="fas fa-image text-purple-400 mr-2 drop-shadow-[0_0_8px_rgba(147,51,234,0.5)]"></i> 图片不符合审美</h3>
+                <p class="text-gray-400 text-sm">原图有人物、还是东亚面孔，需要批量换成欧洲模特+统一底色/场景，普通ERP做不了。</p>
             </div>
-            <div class="glassmorphism p-6">
-                <h3 class="text-lg font-semibold mb-3 flex items-center"><i class="fas fa-robot text-blue-500 mr-2"></i> 上架流程太碎</h3>
-                <p class="text-gray-600 text-sm">自动化脚本和AI各玩各的，商品信息、图像、RPA没打通，无法一键跑完。Vision Flow就是把这条链连起来。</p>
+            <div class="glassmorphism p-6 border border-purple-500/30 shadow-lg hover:shadow-purple-500/20 transition-all duration-300">
+                <h3 class="text-lg font-semibold mb-3 flex items-center text-purple-300"><i class="fas fa-robot text-purple-400 mr-2 drop-shadow-[0_0_8px_rgba(147,51,234,0.5)]"></i> 上架流程太碎</h3>
+                <p class="text-gray-400 text-sm">自动化脚本和AI各玩各的，商品信息、图像、RPA没打通，无法一键跑完。Vision Flow就是把这条链连起来。</p>
             </div>
         </div>
     </section>
@@ -353,15 +469,15 @@
             <!-- 智能选品模块 -->
             <div class="glassmorphism p-6 card-hover feature-card">
                 <div class="flex items-center mb-4">
-                    <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-4 feature-icon">
+                    <div class="w-12 h-12 rounded-full bg-purple-900/50 flex items-center justify-center text-purple-500 mr-4 feature-icon">
                         <i class="fas fa-search-dollar text-xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold">智能选品模块</h3>
+                    <h3 class="text-xl font-semibold text-purple-300">智能选品模块</h3>
                 </div>
-                <p class="text-gray-600 mb-4">基于Ozon平台热销榜单与关键词自动分析系统，实时捕捉市场趋势与消费者偏好，较传统人工选品效率提升2倍，帮助商家快速锁定高潜力商品。</p>
+                <p class="text-gray-400 mb-4">基于Ozon平台热销榜单与关键词自动分析系统，实时捕捉市场趋势与消费者偏好，较传统人工选品效率提升2倍，帮助商家快速锁定高潜力商品。</p>
                 <div class="mb-4">
                     <!-- 保留你的图片url -->
-                    <img src="./微信图片_2025-11-11_192520_211.png" alt="Ozon商品列表界面" class="responsive-image">
+                    <img src="./微信图片_2025-11-11_192520_211.png" alt="Ozon商品列表界面" class="responsive-image border border-purple-500/30 rounded-lg shadow-[0_0_15px_rgba(147,51,234,0.2)]">
                 </div>
                 <div class="flex items-center mt-4">
                     <div class="data-pill"><i class="fas fa-chart-line mr-1"></i> 效率提升2倍</div>
@@ -372,15 +488,15 @@
             <!-- 视觉生成模块 -->
             <div class="glassmorphism p-6 card-hover feature-card">
                 <div class="flex items-center mb-4">
-                    <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-4 feature-icon">
+                    <div class="w-12 h-12 rounded-full bg-purple-900/50 flex items-center justify-center text-purple-500 mr-4 feature-icon">
                         <i class="fas fa-images text-xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold">视觉生成模块</h3>
+                    <h3 class="text-xl font-semibold text-purple-300">视觉生成模块</h3>
                 </div>
-                <p class="text-gray-600 mb-4">采用AI批量生成技术，自动化完成商品主图与详情图制作，效率较人工设计提升48倍，同时支持多风格模板适配不同品类需求。</p>
+                <p class="text-gray-400 mb-4">采用AI批量生成技术，自动化完成商品主图与详情图制作，效率较人工设计提升48倍，同时支持多风格模板适配不同品类需求。</p>
                 <div class="mb-4">
                     <!-- 保留你的图片url -->
-                    <img src="./微信图片_2025-11-11_192526_332.png" alt="图片下载管理界面" class="responsive-image">
+                    <img src="./微信图片_2025-11-11_192526_332.png" alt="图片下载管理界面" class="responsive-image border border-purple-500/30 rounded-lg shadow-[0_0_15px_rgba(147,51,234,0.2)]">
                 </div>
                 <div class="flex items-center mt-4">
                     <div class="data-pill"><i class="fas fa-bolt mr-1"></i> 效率提升48倍</div>
@@ -391,15 +507,15 @@
             <!-- 自动上架模块 -->
             <div class="glassmorphism p-6 card-hover feature-card">
                 <div class="flex items-center mb-4">
-                    <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-4 feature-icon">
+                    <div class="w-12 h-12 rounded-full bg-purple-900/50 flex items-center justify-center text-purple-500 mr-4 feature-icon">
                         <i class="fas fa-upload text-xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold">自动上架模块</h3>
+                    <h3 class="text-xl font-semibold text-purple-300">自动上架模块</h3>
                 </div>
-                <p class="text-gray-600 mb-4">集成俄语NLP标题生成与RPA自动上传功能，实现商品信息的智能撰写与平台无缝对接，上架效率提升10倍，大幅降低跨境运营的语言壁垒与操作成本。</p>
+                <p class="text-gray-400 mb-4">集成俄语NLP标题生成与RPA自动上传功能，实现商品信息的智能撰写与平台无缝对接，上架效率提升10倍，大幅降低跨境运营的语言壁垒与操作成本。</p>
                 <div class="mb-4">
                     <!-- 保留你的图片url -->
-                    <img src="./微信图片_2025-11-11_192501_046.png" alt="订单管理系统界面" class="responsive-image">
+                    <img src="./微信图片_2025-11-11_192501_046.png" alt="订单管理系统界面" class="responsive-image border border-purple-500/30 rounded-lg shadow-[0_0_15px_rgba(147,51,234,0.2)]">
                 </div>
                 <div class="flex items-center mt-4">
                     <div class="data-pill"><i class="fas fa-language mr-1"></i> 俄语NLP</div>
@@ -410,12 +526,12 @@
             <!-- 智能客服模块 -->
             <div class="glassmorphism p-6 card-hover feature-card">
                 <div class="flex items-center mb-4">
-                    <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-4 feature-icon">
+                    <div class="w-12 h-12 rounded-full bg-purple-900/50 flex items-center justify-center text-purple-500 mr-4 feature-icon">
                         <i class="fas fa-headset text-xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold">智能客服模块</h3>
+                    <h3 class="text-xl font-semibold text-purple-300">智能客服模块</h3>
                 </div>
-                <p class="text-gray-600 mb-4">搭载中俄双语AI客服系统，可7×24小时处理咨询、售后等服务请求，响应速度与问题解决效率较人工客服提升360倍，显著改善消费者体验。</p>
+                <p class="text-gray-400 mb-4">搭载中俄双语AI客服系统，可7×24小时处理咨询、售后等服务请求，响应速度与问题解决效率较人工客服提升360倍，显著改善消费者体验。</p>
                 <div class="flex items-center mt-4">
                     <div class="data-pill"><i class="fas fa-clock mr-1"></i> 7×24小时</div>
                     <div class="data-pill"><i class="fas fa-comments mr-1"></i> 中俄双语</div>
@@ -425,12 +541,12 @@
             <!-- 经营分析模块 -->
             <div class="glassmorphism p-6 card-hover feature-card md:col-span-2">
                 <div class="flex items-center mb-4">
-                    <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-4 feature-icon">
+                    <div class="w-12 h-12 rounded-full bg-purple-900/50 flex items-center justify-center text-purple-500 mr-4 feature-icon">
                         <i class="fas fa-chart-pie text-xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold">经营分析模块</h3>
+                    <h3 class="text-xl font-semibold text-purple-300">经营分析模块</h3>
                 </div>
-                <p class="text-gray-600 mb-4">通过实时利润核算与广告ROI监控系统，为商家提供多维度经营数据可视化报告，助力精细化运营决策。</p>
+                <p class="text-gray-400 mb-4">通过实时利润核算与广告ROI监控系统，为商家提供多维度经营数据可视化报告，助力精细化运营决策。</p>
                 <div class="flex items-center mt-4">
                     <div class="data-pill"><i class="fas fa-chart-bar mr-1"></i> 实时监控</div>
                     <div class="data-pill"><i class="fas fa-file-invoice-dollar mr-1"></i> 利润核算</div>
@@ -457,18 +573,18 @@
                 <!-- ComfyUI视觉生成工作流 -->
                 <div class="glassmorphism p-6 tech-card">
                     <div class="flex items-center mb-4">
-                        <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-3">
+                        <div class="w-10 h-10 rounded-full bg-purple-900/50 flex items-center justify-center text-purple-500 mr-3">
                             <i class="fas fa-palette"></i>
                         </div>
-                        <h4 class="text-xl font-semibold">ComfyUI视觉生成工作流</h4>
+                        <h4 class="text-xl font-semibold text-purple-300">ComfyUI视觉生成工作流</h4>
                     </div>
                     <div class="tech-image-container">
                         <!-- 保留你的图片url -->
                         <img src="./微信图片_2025-11-11_192529_544.png" alt="Ozon工作流设计界面" class="tech-image responsive-image">
                     </div>
                     <div class="tech-content">
-                        <p class="text-gray-600 mb-4"><span class="font-medium">应用场景：</span>视觉生成模块的AI图像自动化处理</p>
-                        <p class="text-gray-600 mb-4"><span class="font-medium">技术价值：</span>通过节点式工作流设计，实现商品图风格迁移、多平台尺寸适配、批量水印添加的全流程自动化</p>
+                        <p class="text-gray-400 mb-4"><span class="font-medium text-purple-300">应用场景：</span>视觉生成模块的AI图像自动化处理</p>
+                        <p class="text-gray-400 mb-4"><span class="font-medium text-purple-300">技术价值：</span>通过节点式工作流设计，实现商品图风格迁移、多平台尺寸适配、批量水印添加的全流程自动化</p>
                         <div class="flex flex-wrap mt-4">
                             <div class="data-pill"><i class="fas fa-images mr-1"></i> 图像自动化</div>
                             <div class="data-pill"><i class="fas fa-sitemap mr-1"></i> 节点式工作流</div>
@@ -479,18 +595,18 @@
                 <!-- Coze AI能力集成框架 -->
                 <div class="glassmorphism p-6 tech-card">
                     <div class="flex items-center mb-4">
-                        <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-3">
+                        <div class="w-10 h-10 rounded-full bg-purple-900/50 flex items-center justify-center text-purple-500 mr-3">
                             <i class="fas fa-brain"></i>
                         </div>
-                        <h4 class="text-xl font-semibold">Coze AI能力集成框架</h4>
+                        <h4 class="text-xl font-semibold text-purple-300">Coze AI能力集成框架</h4>
                     </div>
                     <div class="tech-image-container">
                         <!-- 保留你的图片url -->
                         <img src="./微信图片_2025-11-11_192535_223.png" alt="工作流运行监控界面" class="tech-image responsive-image">
                     </div>
                     <div class="tech-content">
-                        <p class="text-gray-600 mb-4"><span class="font-medium">应用场景：</span>多模态AI能力调度与业务流程编排</p>
-                        <p class="text-gray-600 mb-4"><span class="font-medium">技术价值：</span>实现NLP俄语处理、CV图像生成、RPA流程自动化的无缝协同</p>
+                        <p class="text-gray-400 mb-4"><span class="font-medium text-purple-300">应用场景：</span>多模态AI能力调度与业务流程编排</p>
+                        <p class="text-gray-400 mb-4"><span class="font-medium text-purple-300">技术价值：</span>实现NLP俄语处理、CV图像生成、RPA流程自动化的无缝协同</p>
                         <div class="flex flex-wrap mt-4">
                             <div class="data-pill"><i class="fas fa-robot mr-1"></i> 多模态AI</div>
                             <div class="data-pill"><i class="fas fa-cogs mr-1"></i> 流程编排</div>
@@ -501,18 +617,18 @@
                 <!-- RPA跨平台自动化技术 -->
                 <div class="glassmorphism p-6 tech-card">
                     <div class="flex items-center mb-4">
-                        <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mr-3">
+                        <div class="w-10 h-10 rounded-full bg-purple-900/50 flex items-center justify-center text-purple-500 mr-3">
                             <i class="fas fa-robot"></i>
                         </div>
-                        <h4 class="text-xl font-semibold">RPA跨平台自动化技术</h4>
+                        <h4 class="text-xl font-semibold text-purple-300">RPA跨平台自动化技术</h4>
                     </div>
                     <div class="tech-image-container">
                         <!-- 保留你的图片url -->
                         <img src="./微信图片_2025-11-11_192542_996.png" alt="Ozon无人化自动上品系统架构" class="tech-image responsive-image">
                     </div>
                     <div class="tech-content">
-                        <p class="text-gray-600 mb-4"><span class="font-medium">应用场景：</span>商品上架、订单处理、物流跟踪的全流程无人化</p>
-                        <p class="text-gray-600 mb-4"><span class="font-medium">技术架构：</span>基于RPA技术实现跨平台自动化操作，支持多电商平台接口对接</p>
+                        <p class="text-gray-400 mb-4"><span class="font-medium text-purple-300">应用场景：</span>商品上架、订单处理、物流跟踪的全流程无人化</p>
+                        <p class="text-gray-400 mb-4"><span class="font-medium text-purple-300">技术架构：</span>基于RPA技术实现跨平台自动化操作，支持多电商平台接口对接</p>
                         <div class="flex flex-wrap mt-4">
                             <div class="data-pill"><i class="fas fa-box mr-1"></i> 无人化处理</div>
                             <div class="data-pill"><i class="fas fa-exchange-alt mr-1"></i> 跨平台支持</div>
@@ -532,28 +648,28 @@
             </h3>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="bg-blue-50 rounded-xl p-6">
-                    <div class="text-blue-600 text-2xl mb-4 flex justify-center">
+                <div class="bg-purple-900/20 rounded-xl p-6 border border-purple-500/30 shadow-lg hover:shadow-purple-500/20 transition-all duration-300">
+                    <div class="text-purple-400 text-2xl mb-4 flex justify-center drop-shadow-[0_0_10px_rgba(147,51,234,0.5)]">
                         <i class="fas fa-project-diagram"></i>
                     </div>
-                    <h4 class="text-lg font-semibold text-center mb-3">全链路自动化</h4>
-                    <p class="text-gray-600 text-center">从选品到履约的12个关键节点实现AI+RPA协同处理</p>
+                    <h4 class="text-lg font-semibold text-center mb-3 text-purple-300">全链路自动化</h4>
+                    <p class="text-gray-400 text-center">从选品到履约的12个关键节点实现AI+RPA协同处理</p>
                 </div>
                 
-                <div class="bg-blue-50 rounded-xl p-6">
-                    <div class="text-blue-600 text-2xl mb-4 flex justify-center">
+                <div class="bg-purple-900/20 rounded-xl p-6 border border-purple-500/30 shadow-lg hover:shadow-purple-500/20 transition-all duration-300">
+                    <div class="text-purple-400 text-2xl mb-4 flex justify-center drop-shadow-[0_0_10px_rgba(147,51,234,0.5)]">
                         <i class="fas fa-language"></i>
                     </div>
-                    <h4 class="text-lg font-semibold text-center mb-3">本地化模型优化</h4>
-                    <p class="text-gray-600 text-center">针对俄语市场训练的NLP模型，商品标题生成准确率达92%</p>
+                    <h4 class="text-lg font-semibold text-center mb-3 text-purple-300">本地化模型优化</h4>
+                    <p class="text-gray-400 text-center">针对俄语市场训练的NLP模型，商品标题生成准确率达92%</p>
                 </div>
                 
-                <div class="bg-blue-50 rounded-xl p-6">
-                    <div class="text-blue-600 text-2xl mb-4 flex justify-center">
+                <div class="bg-purple-900/20 rounded-xl p-6 border border-purple-500/30 shadow-lg hover:shadow-purple-500/20 transition-all duration-300">
+                    <div class="text-purple-400 text-2xl mb-4 flex justify-center drop-shadow-[0_0_10px_rgba(147,51,234,0.5)]">
                         <i class="fas fa-plug"></i>
                     </div>
-                    <h4 class="text-lg font-semibold text-center mb-3">跨平台适配能力</h4>
-                    <p class="text-gray-600 text-center">支持Ozon、Wildberries等6个俄语区主流电商平台的接口对接</p>
+                    <h4 class="text-lg font-semibold text-center mb-3 text-purple-300">跨平台适配能力</h4>
+                    <p class="text-gray-400 text-center">支持Ozon、Wildberries等6个俄语区主流电商平台的接口对接</p>
                 </div>
             </div>
         </div>
@@ -563,17 +679,17 @@
     <section id="scenes" class="container mx-auto py-12 px-4 md:px-8 mb-16">
         <h2 class="text-3xl font-bold mb-8 text-center">适用场景</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="glassmorphism p-6">
-                <h3 class="font-semibold mb-2">跨境创业个人 / 校园团队</h3>
-                <p class="text-gray-600 text-sm">人手不多但要做大量图和俄语上架，Vision Flow 可以把图像和上品打通。</p>
+            <div class="glassmorphism p-6 border border-purple-500/30 shadow-lg hover:shadow-purple-500/20 transition-all duration-300">
+                <h3 class="font-semibold mb-2 text-purple-300">跨境创业个人 / 校园团队</h3>
+                <p class="text-gray-400 text-sm">人手不多但要做大量图和俄语上架，Vision Flow 可以把图像和上品打通。</p>
             </div>
-            <div class="glassmorphism p-6">
-                <h3 class="font-semibold mb-2">设计+电商混合型工作室</h3>
-                <p class="text-gray-600 text-sm">已经有视觉能力，但想把“去字→贴俄文→换人→输出Ozon图”自动化。</p>
+            <div class="glassmorphism p-6 border border-purple-500/30 shadow-lg hover:shadow-purple-500/20 transition-all duration-300">
+                <h3 class="font-semibold mb-2 text-purple-300">设计+电商混合型工作室</h3>
+                <p class="text-gray-400 text-sm">已经有视觉能力，但想把“去字→贴俄文→换人→输出Ozon图”自动化。</p>
             </div>
-            <div class="glassmorphism p-6">
-                <h3 class="font-semibold mb-2">要做SaaS原型的开发者</h3>
-                <p class="text-gray-600 text-sm">前端放 GitHub Pages，后端用本地/远端节点，成本低、易演示。</p>
+            <div class="glassmorphism p-6 border border-purple-500/30 shadow-lg hover:shadow-purple-500/20 transition-all duration-300">
+                <h3 class="font-semibold mb-2 text-purple-300">要做SaaS原型的开发者</h3>
+                <p class="text-gray-400 text-sm">前端放 GitHub Pages，后端用本地/远端节点，成本低、易演示。</p>
             </div>
         </div>
     </section>
@@ -584,114 +700,1149 @@
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- 刘子涵 -->
-            <div class="glassmorphism p-6 text-center team-card">
-                <div class="w-40 h-40 mx-auto mb-4 overflow-hidden rounded-full border-4 border-blue-100">
-                    <img src="./100abf66000dd4ea56e0d525b6919bf9.jpg" alt="刘子涵设计作品展示" class="w-full h-full object-cover team-photo responsive-image">
+            <div class="glassmorphism p-6 text-center team-card border border-purple-500/30 shadow-lg hover:shadow-purple-500/20 transition-all duration-300">
+                <div class="w-40 h-40 mx-auto mb-4 overflow-hidden rounded-full border-4 border-purple-500/30">
+                    <img src="./100abf66000dd4ea56e0d525b6919bf9.jpg" alt="刘子涵设计作品展示" class="w-full h-full object-cover team-photo responsive-image border border-purple-500/30">
                 </div>
-                <h3 class="text-xl font-semibold mb-1">刘亦</h3>
-                <p class="text-blue-600 mb-4">项目负责人</p>
-                <ul class="text-left space-y-2 text-gray-600 text-sm">
+                <h3 class="text-xl font-semibold mb-1 text-purple-300">刘亦</h3>
+                <p class="text-purple-400 mb-4">项目负责人</p>
+                <ul class="text-left space-y-2 text-gray-400 text-sm">
                     <li class="flex items-start">
-                        <i class="fas fa-graduation-cap text-blue-500 mt-1 mr-2"></i>
+                        <i class="fas fa-graduation-cap text-purple-400 mt-1 mr-2"></i>
                         <span>浙江科技大学视觉传达设计专业品牌设计方向 杭州星微品牌策划有限公司CEO 视觉绽放品牌设计工作室创始人</span>
                     </li>
                     <li class="flex items-start">
-                        <i class="fas fa-paint-brush text-blue-500 mt-1 mr-2"></i>
+                        <i class="fas fa-paint-brush text-purple-400 mt-1 mr-2"></i>
                         <span>精通Adobe系列设计工具及Midjourney，sd等AIGC创作工具负责工作流构建</span>
                     </li>
                     <li class="flex items-start">
-                        <i class="fas fa-code text-blue-500 mt-1 mr-2"></i>
+                        <i class="fas fa-code text-purple-400 mt-1 mr-2"></i>
                         <span>Python/coze/n8n擅长设计流程自动化与工作流搭建，开源量化工具</span>
                     </li>
                     <li class="flex items-start">
-                        <i class="fas fa-globe text-blue-500 mt-1 mr-2"></i>
+                        <i class="fas fa-globe text-purple-400 mt-1 mr-2"></i>
                         <span>主导和部署过海外艺术社区网站lota.network设计与部署。</span>
                     </li>
                 </ul>
             </div>
 
             <!-- 徐明羽 -->
-            <div class="glassmorphism p-6 text-center team-card">
-                <div class="w-40 h-40 mx-auto mb-4 overflow-hidden rounded-full border-4 border-blue-100">
-                    <img src="./8cd3b6c93b8e528fb42a89a3647725d4.jpg" alt="徐明羽" class="w-full h-full object-cover team-photo responsive-image">
+            <div class="glassmorphism p-6 text-center team-card border border-purple-500/30 shadow-lg hover:shadow-purple-500/20 transition-all duration-300">
+                <div class="w-40 h-40 mx-auto mb-4 overflow-hidden rounded-full border-4 border-purple-500/30">
+                    <img src="./8cd3b6c93b8e528fb42a89a3647725d4.jpg" alt="徐明羽" class="w-full h-full object-cover team-photo responsive-image border border-purple-500/30">
                 </div>
-                <h3 class="text-xl font-semibold mb-1">徐明羽</h3>
-                <p class="text-blue-600 mb-4">技术负责人</p>
-                <ul class="text-left space-y-2 text-gray-600 text-sm">
+                <h3 class="text-xl font-semibold mb-1 text-purple-300">徐明羽</h3>
+                <p class="text-purple-400 mb-4">技术负责人</p>
+                <ul class="text-left space-y-2 text-gray-400 text-sm">
                     <li class="flex items-start">
-                        <i class="fas fa-graduation-cap text-blue-500 mt-1 mr-2"></i>
+                        <i class="fas fa-graduation-cap text-purple-400 mt-1 mr-2"></i>
                         <span>浙江科技大学自动化专业，大一综测排名5/119</span>
                     </li>
                     <li class="flex items-start">
-                        <i class="fas fa-laptop-code text-blue-500 mt-1 mr-2"></i>
+                        <i class="fas fa-laptop-code text-purple-400 mt-1 mr-2"></i>
                         <span>熟悉C语言、Python、微信小程序开发及Linux系统操作</span>
                     </li>
                     <li class="flex items-start">
-                        <i class="fas fa-mobile-alt text-blue-500 mt-1 mr-2"></i>
+                        <i class="fas fa-mobile-alt text-purple-400 mt-1 mr-2"></i>
                         <span>独立开发拼车小程序，实现用户信息匹配与数据交互</span>
                     </li>
                     <li class="flex items-start">
-                        <i class="fas fa-car text-blue-500 mt-1 mr-2"></i>
+                        <i class="fas fa-car text-purple-400 mt-1 mr-2"></i>
                         <span>参与智能车竞赛，掌握硬件调试与传感器数据处理</span>
                     </li>
                 </ul>
             </div>
 
             <!-- 林乐艺 -->
-            <div class="glassmorphism p-6 text-center team-card">
-                <div class="w-40 h-40 mx-auto mb-4 overflow-hidden rounded-full border-4 border-blue-100">
-                    <img src="./ebd4eea649a615d5838634ea388d2730.jpg" alt="林乐艺" class="w-full h-full object-cover team-photo responsive-image">
+            <div class="glassmorphism p-6 text-center team-card border border-purple-500/30 shadow-lg hover:shadow-purple-500/20 transition-all duration-300">
+                <div class="w-40 h-40 mx-auto mb-4 overflow-hidden rounded-full border-4 border-purple-500/30">
+                    <img src="./ebd4eea649a615d5838634ea388d2730.jpg" alt="林乐艺" class="w-full h-full object-cover team-photo responsive-image border border-purple-500/30">
                 </div>
-                <h3 class="text-xl font-semibold mb-1">林乐艺</h3>
-                <p class="text-blue-600 mb-4">设计助理</p>
-                <ul class="text-left space-y-2 text-gray-600 text-sm">
+                <h3 class="text-xl font-semibold mb-1 text-purple-300">林乐艺</h3>
+                <p class="text-purple-400 mb-4">设计助理</p>
+                <ul class="text-left space-y-2 text-gray-400 text-sm">
                     <li class="flex items-start">
-                        <i class="fas fa-images text-blue-500 mt-1 mr-2"></i>
+                        <i class="fas fa-images text-purple-400 mt-1 mr-2"></i>
                         <span>协助视觉生成模块的AI图像风格优化与模板设计</span>
                     </li>
                     <li class="flex items-start">
-                        <i class="fas fa-layer-group text-blue-500 mt-1 mr-2"></i>
+                        <i class="fas fa-layer-group text-purple-400 mt-1 mr-2"></i>
                         <span>负责多平台图像格式适配与本地化视觉元素调整</span>
                     </li>
                     <li class="flex items-start">
-                        <i class="fas fa-desktop text-blue-500 mt-1 mr-2"></i>
+                        <i class="fas fa-desktop text-purple-400 mt-1 mr-2"></i>
                         <span>参与用户界面原型设计与交互流程优化</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- 闫梦圆 -->
+            <div class="glassmorphism p-6 text-center team-card border border-purple-500/30 shadow-lg hover:shadow-purple-500/20 transition-all duration-300">
+                <div class="w-40 h-40 mx-auto mb-4 overflow-hidden rounded-full border-4 border-purple-500/30">
+                    <img src="./ee1a4ac401a0909951afb51c43c5b734.jpg" alt="闫梦圆" class="w-full h-full object-cover team-photo responsive-image border border-purple-500/30">
+                </div>
+                <h3 class="text-xl font-semibold mb-1 text-purple-300">闫梦圆</h3>
+                <p class="text-purple-400 mb-4">运营负责人</p>
+                <ul class="text-left space-y-2 text-gray-400 text-sm">
+                    <li class="flex items-start">
+                        <i class="fas fa-bullhorn text-purple-400 mt-1 mr-2"></i>
+                        <span>负责私域增长活动策划与执行，具备社群裂变、用户留存与转化的实操经验</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-book text-purple-400 mt-1 mr-2"></i>
+                        <span>主导 Obsidian 数字知识库建设，通过结构化模板实现个人与项目流程效率提升</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-camera text-purple-400 mt-1 mr-2"></i>
+                        <span>小红书与抖音个人 IP 运营者，围绕数码、晶石、心理疗愈等领域进行内容输出与私域转化</span>
                     </li>
                 </ul>
             </div>
         </div>
         
         <!-- 团队协作成果展示 -->
-        <div class="glassmorphism p-8 mt-12">
-            <h3 class="text-2xl font-semibold mb-6 text-center">团队协作成果展示</h3>
+        <div class="glassmorphism p-8 mt-12 border border-purple-500/30 shadow-lg">
+            <h3 class="text-2xl font-semibold mb-6 text-center text-purple-300">团队协作成果展示</h3>
             <div class="flex justify-center">
                 <!-- 保留你的图片url -->
-                <img src="./微信图片_2025-11-11_192540_549.png" alt="团队协作成果展示" class="responsive-image max-w-full h-auto">
+                <img src="./微信图片_2025-11-11_192540_549.png" alt="团队协作成果展示" class="responsive-image max-w-full h-auto border border-purple-500/30 rounded-lg shadow-[0_0_20px_rgba(147,51,234,0.2)]">
             </div>
         </div>
     </section>
 
     <!-- 页脚 -->
-    <footer class="bg-gradient-to-r from-blue-900 to-indigo-900 text-white py-8">
+    <footer class="bg-gradient-to-r from-purple-900 to-indigo-900 text-white py-8">
         <div class="container mx-auto px-4 md:px-8">
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <div class="mb-4 md:mb-0">
                     <div class="text-xl font-bold flex items-center">
                         <i class="fas fa-brain mr-2"></i>Vision Flow
                     </div>
-                    <p class="text-blue-200 text-sm mt-1">AI智能跨境电商工作流系统</p>
+                    <p class="text-purple-200 text-sm mt-1">AI智能跨境电商工作流系统</p>
                 </div>
                 <div class="text-center md:text-right">
-                    <p class="text-blue-200 text-sm">GitHub: <a href="https://github.com/yourname/vision-flow" class="text-white underline" target="_blank">yourname/vision-flow</a></p>
-                    <p class="text-blue-200 text-sm mt-1">页面内容由 AI 生成与人工整理，仅供展示参考</p>
+                    <p class="text-purple-200 text-sm">GitHub: <a href="https://liuyi180.github.io/ozonflow/" class="text-white underline" target="_blank">yourname/vision-flow</a></p>
+                    <p class="text-purple-200 text-sm mt-1">版权所有 杭州星微品牌策划有限公司</p>
                 </div>
             </div>
         </div>
     </footer>
 
     <script>
+        // 粒子特效实现
+        class Particle {
+            constructor(x, y, canvas) {
+                this.canvas = canvas;
+                this.ctx = canvas.getContext('2d');
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.speedY = Math.random() * 0.5 - 0.25;
+                this.color = `rgba(147, 51, 234, ${Math.random() * 0.8 + 0.2})`;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.size > 0.2) this.size -= 0.01;
+            }
+
+            draw() {
+                this.ctx.fillStyle = this.color;
+                this.ctx.beginPath();
+                this.ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                this.ctx.fill();
+            }
+
+            connect(particles) {
+                particles.forEach(particle => {
+                    const dx = this.x - particle.x;
+                    const dy = this.y - particle.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < 100) {
+                        this.ctx.strokeStyle = `rgba(147, 51, 234, ${0.2 * (1 - distance / 100)})`;
+                        this.ctx.lineWidth = 0.5;
+                        this.ctx.beginPath();
+                        this.ctx.moveTo(this.x, this.y);
+                        this.ctx.lineTo(particle.x, particle.y);
+                        this.ctx.stroke();
+                    }
+                });
+            }
+        }
+
+        function initParticles() {
+            const canvas = document.getElementById('particles');
+            const ctx = canvas.getContext('2d');
+
+            // 设置canvas大小
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            const particlesArray = [];
+            const numberOfParticles = 100;
+
+            // 创建粒子
+            function createParticles() {
+                for (let i = 0; i < numberOfParticles; i++) {
+                    const x = Math.random() * canvas.width;
+                    const y = Math.random() * canvas.height;
+                    particlesArray.push(new Particle(x, y, canvas));
+                }
+            }
+
+            // 动画循环
+            function animateParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                for (let i = 0; i < particlesArray.length; i++) {
+                    particlesArray[i].update();
+                    particlesArray[i].draw();
+                    particlesArray[i].connect(particlesArray.slice(i));
+                }
+
+                // 移除太小的粒子
+                for (let i = particlesArray.length - 1; i >= 0; i--) {
+                    if (particlesArray[i].size <= 0.2) {
+                        particlesArray.splice(i, 1);
+                    }
+                }
+
+                // 保持粒子数量
+                if (particlesArray.length < numberOfParticles) {
+                    const x = Math.random() * canvas.width;
+                    const y = Math.random() * canvas.height;
+                    particlesArray.push(new Particle(x, y, canvas));
+                }
+
+                requestAnimationFrame(animateParticles);
+            }
+
+            createParticles();
+            animateParticles();
+
+            // 鼠标交互
+            let mouseX = 0;
+            let mouseY = 0;
+
+            canvas.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            // 添加鼠标附近的粒子
+            setInterval(() => {
+                if (Math.random() > 0.7) {
+                    particlesArray.push(new Particle(mouseX, mouseY, canvas));
+                }
+            }, 100);
+        }
+
+        // 多语言支持
+        const languageResources = {
+            zh: {
+                // 导航
+                overview: '项目概述',
+                why: '为什么做',
+                features: '功能模块',
+                techArchitecture: '技术架构',
+                scenes: '适用场景',
+                team: '团队介绍',
+                
+                // 头部
+                title: 'Vision Flow',
+                subtitle: 'AI智能跨境电商工作流系统',
+                description: '首创跨境电商AI工作流引擎，通过选品、视觉生成、自动上架、智能客服、经营分析五大模块的全流程自动化，实现3人团队效率媲美传统10人团队。',
+                costReduction: '人力成本降低',
+                responseImprovement: '运营响应提升',
+                gmvTarget: '中期目标GMV',
+                
+                // 项目概述
+                overviewTitle: '项目概述',
+                overviewText1: 'Vision Flow定位为面向中小型跨境电商团队的AI智能运营系统，首创跨境电商AI工作流引擎，通过选品、视觉生成、自动上架、智能客服、经营分析五大模块的全流程自动化，实现3人团队效率媲美传统10人团队。',
+                overviewText2: '系统短期目标3个月内完成Ozon平台店铺上线，中期6个月达成300万卢布GMV，长期将沉淀为标准化AI SaaS产品。',
+                coreValues: '核心价值：',
+                efficiencyRevolution: '效率革命：',
+                efficiencyText: 'AI全流程自动化使人力成本降低70%，运营响应速度提升3倍',
+                modelInnovation: '模式创新：',
+                modelText: '模块化工作流引擎适配多平台运营需求，支持俄语区主流电商平台无缝对接',
+                growthPath: '成长路径：',
+                growthText: '从单一店铺运营到SaaS产品输出，构建跨境电商智能化服务生态',
+                comparisonTitle: '双屏商品详情页对比',
+                
+                // 为什么做
+                whyTitle1: '俄语内容难产',
+                whyText1: '1688来的图是中文、卖点是中文，Ozon/WB 全要俄语，人工翻译+排版成本极高，易出错。',
+                whyTitle2: '图片不符合审美',
+                whyText2: '原图有人物、还是东亚面孔，需要批量换成欧洲模特+统一底色/场景，普通ERP做不了。',
+                whyTitle3: '上架流程太碎',
+                whyText3: '自动化脚本和AI各玩各的，商品信息、图像、RPA没打通，无法一键跑完。Vision Flow就是把这条链连起来。',
+                
+                // 功能模块
+                featuresTitle: '功能模块',
+                smartSelection: '智能选品模块',
+                selectionText: '基于Ozon平台热销榜单与关键词自动分析系统，实时捕捉市场趋势与消费者偏好，较传统人工选品效率提升2倍，帮助商家快速锁定高潜力商品。',
+                visualGeneration: '视觉生成模块',
+                visualText: '采用AI批量生成技术，自动化完成商品主图与详情图制作，效率较人工设计提升48倍，同时支持多风格模板适配不同品类需求。',
+                autoListing: '自动上架模块',
+                listingText: '集成俄语NLP标题生成与RPA自动上传功能，实现商品信息的智能撰写与平台无缝对接，上架效率提升10倍，大幅降低跨境运营的语言壁垒与操作成本。',
+                smartCustomerService: '智能客服模块',
+                serviceText: '搭载中俄双语AI客服系统，可7×24小时处理咨询、售后等服务请求，响应速度与问题解决效率较人工客服提升360倍，显著改善消费者体验。',
+                businessAnalysis: '经营分析模块',
+                analysisText: '通过实时利润核算与广告ROI监控系统，为商家提供多维度经营数据可视化报告，助力精细化运营决策。',
+                
+                // 技术架构
+                techTitle: '核心技术架构',
+                techStack: '技术栈选型',
+                techIntro: '本项目采用三大核心技术构建智能化跨境电商工作流：',
+                comfyui: 'ComfyUI视觉生成工作流',
+                comfyuiScene: '应用场景：',
+                comfyuiText1: '视觉生成模块的AI图像自动化处理',
+                comfyuiValue: '技术价值：',
+                comfyuiText2: '通过节点式工作流设计，实现商品图风格迁移、多平台尺寸适配、批量水印添加的全流程自动化',
+                coze: 'Coze AI能力集成框架',
+                cozeScene: '应用场景：',
+                cozeText1: '多模态AI能力调度与业务流程编排',
+                cozeValue: '技术价值：',
+                cozeText2: '实现NLP俄语处理、CV图像生成、RPA流程自动化的无缝协同',
+                rpa: 'RPA跨平台自动化技术',
+                rpaScene: '应用场景：',
+                rpaText1: '商品上架、订单处理、物流跟踪的全流程无人化',
+                rpaValue: '技术架构：',
+                rpaText2: '基于RPA技术实现跨平台自动化操作，支持多电商平台接口对接',
+                techAdvantages: '技术优势',
+                fullAutomation: '全链路自动化',
+                automationText: '从选品到履约的12个关键节点实现AI+RPA协同处理',
+                localModel: '本地化模型优化',
+                modelText: '针对俄语市场训练的NLP模型，商品标题生成准确率达92%',
+                crossPlatform: '跨平台适配能力',
+                platformText: '支持Ozon、Wildberries等6个俄语区主流电商平台的接口对接',
+                
+                // 适用场景
+                scenesTitle: '适用场景',
+                scene1Title: '跨境创业个人 / 校园团队',
+                scene1Text: '人手不多但要做大量图和俄语上架，Vision Flow 可以把图像和上品打通。',
+                scene2Title: '设计+电商混合型工作室',
+                scene2Text: '已经有视觉能力，但想把“去字→贴俄文→换人→输出Ozon图”自动化。',
+                scene3Title: '要做SaaS原型的开发者',
+                scene3Text: '前端放 GitHub Pages，后端用本地/远端节点，成本低、易演示。',
+                
+                // 团队介绍
+                teamTitle: '团队介绍',
+                member1Name: '刘亦',
+                member1Role: '项目负责人',
+                member1Text1: '浙江科技大学视觉传达设计专业品牌设计方向 杭州星微品牌策划有限公司CEO 视觉绽放品牌设计工作室创始人',
+                member1Text2: '精通Adobe系列设计工具及Midjourney，sd等AIGC创作工具负责工作流构建',
+                member1Text3: 'Python/coze/n8n擅长设计流程自动化与工作流搭建，开源量化工具',
+                member1Text4: '主导和部署过海外艺术社区网站lota.network设计与部署。',
+                member2Name: '徐明羽',
+                member2Role: '技术负责人',
+                member2Text1: '浙江科技大学自动化专业，大一综测排名5/119',
+                member2Text2: '熟悉C语言、Python、微信小程序开发及Linux系统操作',
+                member2Text3: '独立开发拼车小程序，实现用户信息匹配与数据交互',
+                member2Text4: '参与智能车竞赛，掌握硬件调试与传感器数据处理',
+                member3Name: '林乐艺',
+                member3Role: '设计助理',
+                member3Text1: '协助视觉生成模块的AI图像风格优化与模板设计',
+                member3Text2: '负责多平台图像格式适配与本地化视觉元素调整',
+                member3Text3: '参与用户界面原型设计与交互流程优化',
+                member4Name: '闫梦圆',
+                member4Role: '运营负责人',
+                member4Text1: '负责私域增长活动策划与执行，具备社群裂变、用户留存与转化的实操经验',
+                member4Text2: '主导 Obsidian 数字知识库建设，通过结构化模板实现个人与项目流程效率提升',
+                member4Text3: '小红书与抖音个人 IP 运营者，围绕数码、晶石、心理疗愈等领域进行内容输出与私域转化',
+                teamAchievements: '团队协作成果展示',
+                
+                // 页脚
+                footerText: 'AI智能跨境电商工作流系统',
+                github: 'GitHub:',
+                pageInfo: '页面内容由 AI 生成与人工整理，仅供展示参考',
+                
+                // 数据标签
+                efficiencyPill: '效率提升2倍',
+                potentialPill: '高潜力商品',
+                speedPill: '效率提升48倍',
+                stylePill: '多风格模板',
+                nlpPill: '俄语NLP',
+                listingSpeedPill: '效率提升10倍',
+                serviceTimePill: '7×24小时',
+                languagePill: '中俄双语',
+                realtimePill: '实时监控',
+                profitPill: '利润核算',
+                imageAutomationPill: '图像自动化',
+                workflowPill: '节点式工作流',
+                multimodalPill: '多模态AI',
+                orchestrationPill: '流程编排',
+                unmannedPill: '无人化处理',
+                crossplatformPill: '跨平台支持'
+            },
+            ru: {
+                // 导航
+                overview: 'Обзор проекта',
+                why: 'Почему это нужно',
+                features: 'Функциональные модули',
+                techArchitecture: 'Техническая архитектура',
+                scenes: 'Применяемые сценарии',
+                team: 'О команде',
+                
+                // 头部
+                title: 'Vision Flow',
+                subtitle: 'AI-система рабочего процесса для кросс-граничной электронной коммерции',
+                description: 'Первый в своем роде движок AI-рабочего процесса для кросс-граничной электронной коммерции, реализующий полную автоматизацию через пять модулей: подбор товаров, генерация визуала, автоматическая публикация, интеллектуальный сервис клиентов и анализ бизнеса, позволяющий команде из 3 человек работать с эффективностью, сравнимой с традиционной командой из 10 человек.',
+                costReduction: 'Снижение затрат на труд',
+                responseImprovement: 'Улучшение оперативности',
+                gmvTarget: 'Среднесрочная цель GMV',
+                
+                // 项目概述
+                overviewTitle: 'Обзор проекта',
+                overviewText1: 'Vision Flow позиционируется как интеллектуальная AI-система управления для малых и средних команд кросс-граничной электронной коммерции, первый в своем роде движок AI-рабочего процесса для кросс-граничной электронной коммерции, реализующий полную автоматизацию через пять модулей: подбор товаров, генерация визуала, автоматическая публикация, интеллектуальный сервис клиентов и анализ бизнеса, позволяющий команде из 3 человек работать с эффективностью, сравнимой с традиционной командой из 10 человек.',
+                overviewText2: 'Короткосрочная цель системы - запустить магазин на платформе Ozon за 3 месяца, среднесрочная - достичь 3 миллиона рублей GMV за 6 месяцев, долгосрочная - превратиться в стандартизированный продукт AI SaaS.',
+                coreValues: 'Основные ценности:',
+                efficiencyRevolution: 'Революция в эффективности:',
+                efficiencyText: 'Полная автоматизация AI сокращает затраты на труд на 70% и увеличивает скорость реакции на 3 раза',
+                modelInnovation: 'Инновации в модели:',
+                modelText: 'Модульный движок рабочего процесса адаптирован для мультиплатформенной эксплуатации, поддерживает бесшовную интеграцию с основными платформами электронной коммерции на русском рынке',
+                growthPath: 'Путь роста:',
+                growthText: 'От эксплуатации одного магазина до вывода продукта SaaS, создание экосистемы интеллектуальных услуг для кросс-граничной электронной коммерции',
+                comparisonTitle: 'Сравнение страниц деталей товара на двух экранах',
+                
+                // 为什么做
+                whyTitle1: 'Проблемы с русским контентом',
+                whyText1: 'Изображения и преимущества от 1688 на китайском, а Ozon/WB требуют русского, стоимость ручного перевода и форматирования очень высока, легко ошибаться.',
+                whyTitle2: 'Изображения не соответствуют эстетике',
+                whyText2: 'Оригинальные изображения с людьми, в том числе с восточноазиатскими лицами, нуждаются в массовой замене европейскими моделями + унифицированным фоном/сценой, обычный ERP не может это сделать.',
+                whyTitle3: 'Процесс публикации слишком фрагментирован',
+                whyText3: 'Автоматизированные скрипты и AI работают отдельно, информация о товарах, изображения и RPA не связаны, невозможно выполнить все за один клик. Vision Flow связывает эту цепочку.',
+                
+                // 功能模块
+                featuresTitle: 'Функциональные модули',
+                smartSelection: 'Модуль интеллектуального подбора товаров',
+                selectionText: 'На основе системы автоматического анализа популярных списков и ключевых слов платформы Ozon, в реальном времени отслеживает рыночные тренды и предпочтения потребителей, увеличивая эффективность по сравнению с традиционным ручным подбором товаров в 2 раза, помогая продавцам быстро определять товары с высоким потенциалом.',
+                visualGeneration: 'Модуль генерации визуала',
+                visualText: 'Использует технологию массовой генерации AI для автоматического создания главных и детальных изображений товаров, увеличивая эффективность по сравнению с ручным дизайном в 48 раз, поддерживает шаблоны разных стилей для адаптации к различным категориям товаров.',
+                autoListing: 'Модуль автоматической публикации',
+                listingText: 'Интегрирует генерацию заголовков на русском языке с помощью NLP и функцию автоматической загрузки через RPA, реализует интеллектуальное составление информации о товарах и бесшовную интеграцию с платформами, увеличивая эффективность публикации в 10 раз, значительно снижая языковой барьер и операционные затраты на кросс-граничную торговлю.',
+                smartCustomerService: 'Модуль интеллектуального сервиса клиентов',
+                serviceText: 'Основан на двуязычной системе AI-сервиса клиентов на русском и китайском языках, может обрабатывать запросы на консультацию, послепродажное обслуживание и т.д. 24/7, скорость ответа и эффективность решения проблем увеличены в 360 раз по сравнению с человеческим сервисом клиентов, значительно улучшая опыт потребителей.',
+                businessAnalysis: 'Модуль анализа бизнеса',
+                analysisText: 'Через систему реального времени учета прибыли и мониторинга ROI рекламы предоставляет многомерные визуализированные отчеты о данных бизнеса, помогающие принимать решения об точном управлении.',
+                
+                // 技术架构
+                techTitle: 'Основная Техническая архитектура',
+                techStack: 'Выбор технологического стека',
+                techIntro: 'Проект использует три ключевых технологии для построения интеллектуального рабочего процесса кросс-граничной электронной коммерции:',
+                comfyui: 'ComfyUI - рабочий процесс генерации визуала',
+                comfyuiScene: 'Сценарий применения:',
+                comfyuiText1: 'Автоматическая обработка AI-изображений в модуле генерации визуала',
+                comfyuiValue: 'Техническая ценность:',
+                comfyuiText2: 'С помощью узлового рабочего процесса реализует стильный перенос изображений товаров, адаптацию под различные размеры платформ и массовое добавление водяных знаков в полном автоматическом режиме',
+                coze: 'Фреймворк интеграции AI-способностей Coze',
+                cozeScene: 'Сценарий применения:',
+                cozeText1: 'Диспетчеризация мультимодальных AI-способностей и оркестрация бизнес-процессов',
+                cozeValue: 'Техническая ценность:',
+                cozeText2: 'Реализует бесшовное взаимодействие обработки русского языка через NLP, генерации изображений через CV и автоматизации процессов через RPA',
+                rpa: 'Технология RPA для кросс-платформенной автоматизации',
+                rpaScene: 'Сценарий применения:',
+                rpaText1: 'Полная автоматизация процессов публикации товаров, обработки заказов и трекинга логистики',
+                rpaValue: 'Техническая архитектура:',
+                rpaText2: 'На основе технологии RPA实现 кросс-платформенные автоматические операции, поддерживает интеграцию с интерфейсами нескольких платформ электронной коммерции',
+                techAdvantages: 'Технические преимущества',
+                fullAutomation: 'Полная автоматизация цепочки',
+                automationText: '12 ключевых узлов от подбора товаров до выполнения заказов реализованы через сотрудничество AI+RPA',
+                localModel: 'Оптимизация локальной модели',
+                modelText: 'Модель NLP, обученная для российского рынка, имеет точность генерации заголовков товаров 92%',
+                crossPlatform: 'Возможность адаптации к разным платформам',
+                platformText: 'Поддерживает интеграцию с 6 основными платформами электронной коммерции на русском рынке, такими как Ozon, Wildberries и т.д.',
+                
+                // 适用场景
+                scenesTitle: 'Применяемые сценарии',
+                scene1Title: 'Индивидуальные предприниматели в кросс-граничной торговле / студенческие команды',
+                scene1Text: 'Недостаточно людей, но нужно сделать много изображений и публикаций на русском языке, Vision Flow может связать изображения и публикацию товаров.',
+                scene2Title: 'Студии смешанного типа: дизайн + электронная коммерция',
+                scene2Text: 'Уже есть возможности в области визуала, но хотят автоматизировать процесс "удаления текста → нанесение русского текста → замена людей → вывод изображений для Ozon".',
+                scene3Title: 'Разработчики, создающие прототипы SaaS',
+                scene3Text: 'Фронтенд на GitHub Pages, бэкенд на локальных/удаленных узлах, низкая стоимость, легко демонстрировать.',
+                
+                // 团队介绍
+                teamTitle: 'О команде',
+                member1Name: 'Лю И',
+                member1Role: 'Руководитель проекта',
+                member1Text1: 'Направление дизайна брендов по специальности "Визуальная коммуникация" в Zhejiang University of Science and Technology, генеральный директор компании Hangzhou Xingwei Brand Planning Co., Ltd., основатель студии "Визуальный расцвет бренд-дизайна".',
+                member1Text2: 'В совершенстве владеет инструментами дизайна Adobe и инструментами создания AIGC, такими как Midjourney, sd и т.д., отвечает за построение рабочего процесса.',
+                member1Text3: 'Python/coze/n8n специализируется на автоматизации процессов и построении рабочих потоков, инструменты с открытым исходным кодом для квантования',
+                member1Text4: 'Ориентировал и развернул дизайн и развертывание зарубежного арт-коммьюнити lota.network.',
+                member2Name: 'Сю Миньюй',
+                member2Role: 'Технический руководитель',
+                member2Text1: 'Специальность "Автоматизация" в Zhejiang University of Science and Technology, занимает 5-е место по общему рейтингу среди 119 студентов первого курса.',
+                member2Text2: 'Ознакомлен с языками программирования C, Python, разработкой мини-программ WeChat и операционной системой Linux.',
+                member2Text3: 'Самостоятельно разработал мини-программу для совместных поездок, реализующую сопоставление информации пользователей и обмен данными.',
+                member2Text4: 'Участвовал в соревнованиях по интеллектуальным автомобилям, владеет настройкой оборудования и обработкой данных сенсоров.',
+                member3Name: 'Лин Лейи',
+                member3Role: 'Дизайнер-помощник',
+                member3Text1: 'Помогает оптимизировать стиль AI-изображений и дизайнерские шаблоны в модуле генерации визуала.',
+                member3Text2: 'Отвечает за адаптацию форматов изображений для разных платформ и корректировку локальных визуальных элементов.',
+                member3Text3: 'Участвует в создании прототипов пользовательского интерфейса и оптимизации процессов взаимодействия.',
+                member4Name: 'Янь Мэн Юань',
+                member4Role: 'Ответственный за операции',
+                member4Text1: 'Отвечает за планирование и выполнение акций по приросту приватной аудитории, обладает практическим опытом по фission в сообществах, удержанию пользователей и конверсии.',
+                member4Text2: 'Лидер по созданию цифровых знаний в Obsidian, реализует повышение эффективности личных и проектных процессов через структурированные шаблоны.',
+                member4Text3: 'Оператор личных IP на Xiaohongshu и Douyin, осуществляет выход контента и конверсию в приватную аудиторию в таких областях, как цифровая техника, кристаллы, психологическое исцеление и т.д.',
+                teamAchievements: 'Презентация достижений команды',
+                
+                // 页脚
+                footerText: 'AI-система рабочего процесса для кросс-граничной электронной коммерции',
+                github: 'GitHub:',
+                pageInfo: 'Содержимое страницы сгенерировано AI и отредактировано вручную, предназначено только для демонстрации.',
+                
+                // 数据标签
+                efficiencyPill: 'Увеличение эффективности в 2 раза',
+                potentialPill: 'Товары с высоким потенциалом',
+                speedPill: 'Увеличение эффективности в 48 раз',
+                stylePill: 'Шаблоны разных стилей',
+                nlpPill: 'Русский NLP',
+                listingSpeedPill: 'Увеличение эффективности в 10 раз',
+                serviceTimePill: '24/7',
+                languagePill: 'Двуязычный: русский и китайский',
+                realtimePill: 'Мониторинг в реальном времени',
+                profitPill: 'Учет прибыли',
+                imageAutomationPill: 'Автоматизация изображений',
+                workflowPill: 'Узловой рабочий процесс',
+                multimodalPill: 'Мультимодальный AI',
+                orchestrationPill: 'Оркестрация процессов',
+                unmannedPill: 'Безлюдная обработка',
+                crossplatformPill: 'Поддержка нескольких платформ'
+            },
+            en: {
+                // 导航
+                overview: 'Project Overview',
+                why: 'Why We Do This',
+                features: 'Feature Modules',
+                techArchitecture: 'Technical Architecture',
+                scenes: 'Application Scenarios',
+                team: 'Team Introduction',
+                
+                // 头部
+                title: 'Vision Flow',
+                subtitle: 'AI Smart Cross-Border E-Commerce Workflow System',
+                description: 'The first cross-border e-commerce AI workflow engine, through full-process automation of five modules: product selection, visual generation, automatic listing, intelligent customer service, and business analysis, achieving 3-person team efficiency comparable to traditional 10-person teams.',
+                costReduction: 'Labor Cost Reduction',
+                responseImprovement: 'Operational Response Improvement',
+                gmvTarget: 'Medium-term GMV Target',
+                
+                // 项目概述
+                overviewTitle: 'Project Overview',
+                overviewText1: 'Vision Flow is positioned as an AI intelligent operation system for small and medium cross-border e-commerce teams, the first cross-border e-commerce AI workflow engine, through full-process automation of five modules: product selection, visual generation, automatic listing, intelligent customer service, and business analysis, achieving 3-person team efficiency comparable to traditional 10-person teams.',
+                overviewText2: 'The system\'s short-term goal is to complete Ozon platform store launch within 3 months, medium-term to achieve 3 million rubles GMV within 6 months, and long-term to evolve into a standardized AI SaaS product.',
+                coreValues: 'Core Values:',
+                efficiencyRevolution: 'Efficiency Revolution:',
+                efficiencyText: 'AI full-process automation reduces labor costs by 70% and improves operational response speed by 3 times',
+                modelInnovation: 'Model Innovation:',
+                modelText: 'Modular workflow engine adapts to multi-platform operation needs, supporting seamless integration with major Russian-speaking e-commerce platforms',
+                growthPath: 'Growth Path:',
+                growthText: 'From single store operation to SaaS product output, building a cross-border e-commerce intelligent service ecosystem',
+                comparisonTitle: 'Dual-screen Product Detail Page Comparison',
+                
+                // 为什么做
+                whyTitle1: 'Russian Content Production Difficulties',
+                whyText1: 'Images and selling points from 1688 are in Chinese, but Ozon/WB require Russian, manual translation + typesetting costs are extremely high and error-prone.',
+                whyTitle2: 'Images Don\'t Match Aesthetics',
+                whyText2: 'Original images have people, and they are East Asian faces, need to be batch replaced with European models + unified background/scene, which ordinary ERP cannot do.',
+                whyTitle3: 'Listing Process is Too Fragmented',
+                whyText3: 'Automated scripts and AI work separately, product information, images, and RPA are not connected, cannot be run with one click. Vision Flow connects this chain.',
+                
+                // 功能模块
+                featuresTitle: 'Feature Modules',
+                smartSelection: 'Intelligent Product Selection Module',
+                selectionText: 'Based on Ozon platform hot lists and keyword automatic analysis system, real-time capture of market trends and consumer preferences, improving efficiency by 2 times compared to traditional manual product selection, helping merchants quickly lock high-potential products.',
+                visualGeneration: 'Visual Generation Module',
+                visualText: 'Adopts AI batch generation technology to automatically complete product main images and detail images, improving efficiency by 48 times compared to manual design, while supporting multi-style templates to adapt to different category needs.',
+                autoListing: 'Automatic Listing Module',
+                listingText: 'Integrates Russian NLP title generation and RPA automatic upload function, realizing intelligent product information writing and platform seamless integration, improving listing efficiency by 10 times, greatly reducing language barriers and operational costs for cross-border operations.',
+                smartCustomerService: 'Intelligent Customer Service Module',
+                serviceText: 'Equipped with Chinese-Russian bilingual AI customer service system, can handle consultation, after-sales and other service requests 7×24 hours, response speed and problem-solving efficiency improved by 360 times compared to manual customer service, significantly improving consumer experience.',
+                businessAnalysis: 'Business Analysis Module',
+                analysisText: 'Through real-time profit calculation and advertising ROI monitoring system, provides merchants with multi-dimensional business data visualization reports, assisting in refined operation decisions.',
+                
+                // 技术架构
+                techTitle: 'Core Technical Architecture',
+                techStack: 'Technology Stack Selection',
+                techIntro: 'This project adopts three core technologies to build an intelligent cross-border e-commerce workflow:',
+                comfyui: 'ComfyUI Visual Generation Workflow',
+                comfyuiScene: 'Application Scenario:',
+                comfyuiText1: 'AI image automation processing in the visual generation module',
+                comfyuiValue: 'Technical Value:',
+                comfyuiText2: 'Through node-based workflow design, realizes full-process automation of product image style migration, multi-platform size adaptation, and batch watermark addition',
+                coze: 'Coze AI Capability Integration Framework',
+                cozeScene: 'Application Scenario:',
+                cozeText1: 'Multi-modal AI capability scheduling and business process orchestration',
+                cozeValue: 'Technical Value:',
+                cozeText2: 'Realizes seamless collaboration of Russian NLP processing, CV image generation, and RPA process automation',
+                rpa: 'RPA Cross-Platform Automation Technology',
+                rpaScene: 'Application Scenario:',
+                rpaText1: 'Full-process unmanned operation of product listing, order processing, and logistics tracking',
+                rpaValue: 'Technical Architecture:',
+                rpaText2: 'Based on RPA technology to realize cross-platform automated operations, supporting multi-e-commerce platform interface docking',
+                techAdvantages: 'Technical Advantages',
+                fullAutomation: 'Full-link Automation',
+                automationText: '12 key nodes from product selection to fulfillment realized through AI+RPA collaboration',
+                localModel: 'Localized Model Optimization',
+                modelText: 'NLP model trained for the Russian market, product title generation accuracy reaches 92%',
+                crossPlatform: 'Cross-Platform Adaptation Capability',
+                platformText: 'Supports interface docking with 6 mainstream Russian-speaking e-commerce platforms including Ozon, Wildberries, etc.',
+                
+                // 适用场景
+                scenesTitle: 'Application Scenarios',
+                scene1Title: 'Cross-border Entrepreneurs / Campus Teams',
+                scene1Text: 'Limited staff but need to create a lot of images and Russian listings, Vision Flow can connect images and listings.',
+                scene2Title: 'Design+E-commerce Hybrid Studios',
+                scene2Text: 'Already have visual capabilities, but want to automate the process of "removing text → pasting Russian text → replacing people → outputting Ozon images".',
+                scene3Title: 'Developers Building SaaS Prototypes',
+                scene3Text: 'Frontend on GitHub Pages, backend with local/remote nodes, low cost, easy to demonstrate.',
+                
+                // 团队介绍
+                teamTitle: 'Team Introduction',
+                member1Name: 'Liu Yi',
+                member1Role: 'Project Manager',
+                member1Text1: 'Zhejiang University of Science and Technology, Visual Communication Design major, Brand Design direction, CEO of Hangzhou Xingwei Brand Planning Co., Ltd., Founder of Visual Bloom Brand Design Studio.',
+                member1Text2: 'Proficient in Adobe series design tools and Midjourney, sd and other AIGC creation tools, responsible for workflow construction.',
+                member1Text3: 'Python/coze/n8n expert in design process automation and workflow building, open-source quantitative tools.',
+                member1Text4: 'Led and deployed the design and deployment of overseas art community website lota.network.',
+                member2Name: 'Xu Mingyu',
+                member2Role: 'Technical Manager',
+                member2Text1: 'Zhejiang University of Science and Technology, Automation major, first-year comprehensive ranking 5/119.',
+                member2Text2: 'Familiar with C language, Python, WeChat mini-program development and Linux system operation.',
+                member2Text3: 'Independently developed a carpooling mini-program, realizing user information matching and data interaction.',
+                member2Text4: 'Participated in intelligent car competition, mastered hardware debugging and sensor data processing.',
+                member3Name: 'Lin Leyi',
+                member3Role: 'Design Assistant',
+                member3Text1: 'Assists in AI image style optimization and template design for the visual generation module.',
+                member3Text2: 'Responsible for multi-platform image format adaptation and localized visual element adjustment.',
+                member3Text3: 'Participates in user interface prototype design and interaction flow optimization.',
+                member4Name: 'Yan Mengyuan',
+                member4Role: 'Operations Director',
+                member4Text1: 'Responsible for private domain growth activity planning and execution, with practical experience in community fission, user retention, and conversion.',
+                member4Text2: 'Led Obsidian digital knowledge base construction, improving personal and project workflow efficiency through structured templates.',
+                member4Text3: 'Xiaohongshu and Douyin personal IP operator, creating content and converting to private domain in areas such as digital products, crystals, and psychological healing.',
+                teamAchievements: 'Team Collaboration Achievements',
+                
+                // 页脚
+                footerText: 'AI Smart Cross-Border E-Commerce Workflow System',
+                github: 'GitHub:',
+                pageInfo: 'Page content is generated by AI and manually organized, for demonstration purposes only',
+                
+                // 数据标签
+                efficiencyPill: 'Efficiency Improved 2x',
+                potentialPill: 'High Potential Products',
+                speedPill: 'Efficiency Improved 48x',
+                stylePill: 'Multi-style Templates',
+                nlpPill: 'Russian NLP',
+                listingSpeedPill: 'Efficiency Improved 10x',
+                serviceTimePill: '7×24 Hours',
+                languagePill: 'Chinese-Russian Bilingual',
+                realtimePill: 'Real-time Monitoring',
+                profitPill: 'Profit Calculation',
+                imageAutomationPill: 'Image Automation',
+                workflowPill: 'Node-based Workflow',
+                multimodalPill: 'Multi-modal AI',
+                orchestrationPill: 'Process Orchestration',
+                unmannedPill: 'Unmanned Processing',
+                crossplatformPill: 'Cross-platform Support'
+            }
+        };
+        
+        // 当前语言
+        let currentLanguage = 'zh';
+        
+        // 切换语言
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            updateContent();
+            
+            // 更新语言切换按钮文本
+            const languageToggle = document.getElementById('languageToggle');
+            if (languageToggle) {
+                const langText = lang === 'zh' ? '中文' : lang === 'ru' ? 'Русский' : 'English';
+                languageToggle.querySelector('span').textContent = langText;
+            }
+            
+            // 关闭语言菜单
+            document.getElementById('languageMenu').classList.add('hidden');
+        }
+        
+        // 更新页面内容
+        function updateContent() {
+            const lang = currentLanguage;
+            const resources = languageResources[lang];
+            
+            // 更新导航
+            document.querySelectorAll('a[href="#overview"]').forEach(link => {
+                link.textContent = resources.overview;
+            });
+            document.querySelectorAll('a[href="#why"]').forEach(link => {
+                link.textContent = resources.why;
+            });
+            document.querySelectorAll('a[href="#features"]').forEach(link => {
+                link.textContent = resources.features;
+            });
+            document.querySelectorAll('a[href="#tech-architecture"]').forEach(link => {
+                link.textContent = resources.techArchitecture;
+            });
+            document.querySelectorAll('a[href="#scenes"]').forEach(link => {
+                link.textContent = resources.scenes;
+            });
+            document.querySelectorAll('a[href="#team"]').forEach(link => {
+                link.textContent = resources.team;
+            });
+            
+            // 更新头部
+            document.querySelector('h1').textContent = resources.title;
+            document.querySelector('header p:nth-of-type(1)').textContent = resources.subtitle;
+            document.querySelector('header p:nth-of-type(2)').textContent = resources.description;
+            
+            // 更新统计卡片
+            const statCards = document.querySelectorAll('.stat-card');
+            if (statCards.length >= 3) {
+                statCards[0].querySelector('.text-sm').textContent = resources.costReduction;
+                statCards[1].querySelector('.text-sm').textContent = resources.responseImprovement;
+                statCards[2].querySelector('.text-sm').textContent = resources.gmvTarget;
+            }
+            
+            // 更新项目概述
+            document.querySelector('#overview h2').textContent = resources.overviewTitle;
+            const overviewTexts = document.querySelectorAll('#overview p');
+            if (overviewTexts.length >= 2) {
+                overviewTexts[0].textContent = resources.overviewText1;
+                overviewTexts[1].textContent = resources.overviewText2;
+            }
+            document.querySelector('#overview h4').textContent = resources.coreValues;
+            
+            // 更新核心价值列表
+            const coreValueItems = document.querySelectorAll('#overview ul li');
+            if (coreValueItems.length >= 3) {
+                coreValueItems[0].querySelector('.font-medium').textContent = resources.efficiencyRevolution;
+                coreValueItems[0].querySelector('span:nth-of-type(2)').textContent = resources.efficiencyText;
+                coreValueItems[1].querySelector('.font-medium').textContent = resources.modelInnovation;
+                coreValueItems[1].querySelector('span:nth-of-type(2)').textContent = resources.modelText;
+                coreValueItems[2].querySelector('.font-medium').textContent = resources.growthPath;
+                coreValueItems[2].querySelector('span:nth-of-type(2)').textContent = resources.growthText;
+            }
+            
+            // 更新双屏对比标题
+            document.querySelector('#overview .bg-gradient-to-br h4').textContent = resources.comparisonTitle;
+            
+            // 更新为什么做
+            const whyCards = document.querySelectorAll('#why .glassmorphism');
+            if (whyCards.length >= 3) {
+                whyCards[0].querySelector('h3').textContent = resources.whyTitle1;
+                whyCards[0].querySelector('p').textContent = resources.whyText1;
+                whyCards[1].querySelector('h3').textContent = resources.whyTitle2;
+                whyCards[1].querySelector('p').textContent = resources.whyText2;
+                whyCards[2].querySelector('h3').textContent = resources.whyTitle3;
+                whyCards[2].querySelector('p').textContent = resources.whyText3;
+            }
+            
+            // 更新功能模块
+            document.querySelector('#features h2').textContent = resources.featuresTitle;
+            const featureCards = document.querySelectorAll('#features .feature-card');
+            if (featureCards.length >= 5) {
+                // 智能选品
+                featureCards[0].querySelector('h3').textContent = resources.smartSelection;
+                featureCards[0].querySelector('p').textContent = resources.selectionText;
+                // 视觉生成
+                featureCards[1].querySelector('h3').textContent = resources.visualGeneration;
+                featureCards[1].querySelector('p').textContent = resources.visualText;
+                // 自动上架
+                featureCards[2].querySelector('h3').textContent = resources.autoListing;
+                featureCards[2].querySelector('p').textContent = resources.listingText;
+                // 智能客服
+                featureCards[3].querySelector('h3').textContent = resources.smartCustomerService;
+                featureCards[3].querySelector('p').textContent = resources.serviceText;
+                // 经营分析
+                featureCards[4].querySelector('h3').textContent = resources.businessAnalysis;
+                featureCards[4].querySelector('p').textContent = resources.analysisText;
+            }
+            
+            // 更新技术架构
+            document.querySelector('#tech-architecture h2').textContent = resources.techTitle;
+            document.querySelector('#tech-architecture h3:nth-of-type(1)').textContent = resources.techStack;
+            document.querySelector('#tech-architecture p').textContent = resources.techIntro;
+            
+            // 更新技术栈卡片
+            const techCards = document.querySelectorAll('#tech-architecture .tech-card');
+            if (techCards.length >= 3) {
+                // ComfyUI
+                techCards[0].querySelector('h4').textContent = resources.comfyui;
+                techCards[0].querySelectorAll('.tech-content p').forEach((p, index) => {
+                    if (index === 0) {
+                        p.innerHTML = `<span class="font-medium">${resources.comfyuiScene}</span> ${resources.comfyuiText1}`;
+                    } else if (index === 1) {
+                        p.innerHTML = `<span class="font-medium">${resources.comfyuiValue}</span> ${resources.comfyuiText2}`;
+                    }
+                });
+                // Coze
+                techCards[1].querySelector('h4').textContent = resources.coze;
+                techCards[1].querySelectorAll('.tech-content p').forEach((p, index) => {
+                    if (index === 0) {
+                        p.innerHTML = `<span class="font-medium">${resources.cozeScene}</span> ${resources.cozeText1}`;
+                    } else if (index === 1) {
+                        p.innerHTML = `<span class="font-medium">${resources.cozeValue}</span> ${resources.cozeText2}`;
+                    }
+                });
+                // RPA
+                techCards[2].querySelector('h4').textContent = resources.rpa;
+                techCards[2].querySelectorAll('.tech-content p').forEach((p, index) => {
+                    if (index === 0) {
+                        p.innerHTML = `<span class="font-medium">${resources.rpaScene}</span> ${resources.rpaText1}`;
+                    } else if (index === 1) {
+                        p.innerHTML = `<span class="font-medium">${resources.rpaValue}</span> ${resources.rpaText2}`;
+                    }
+                });
+            }
+            
+            // 更新技术优势
+            const techSection = document.getElementById('tech-architecture');
+            const h3Elements = techSection.querySelectorAll('h3');
+            if (h3Elements.length >= 2) {
+                h3Elements[1].textContent = resources.techAdvantages;
+            }
+            // 更新技术优势卡片内容
+            // 使用更可靠的选择方式，通过标题定位技术优势部分
+            const techArchitectureSection = document.getElementById('tech-architecture');
+            
+            // 获取技术架构部分所有的glassmorphism容器
+            const glassmorphismContainers = techArchitectureSection.querySelectorAll('.glassmorphism');
+            let advantageCardsContainer = null;
+            
+            // 遍历容器，找到包含"技术优势"或"Technical Advantages"或"Технические преимущества"标题的容器
+            glassmorphismContainers.forEach(container => {
+                const h3 = container.querySelector('h3');
+                if (h3) {
+                    const title = h3.textContent.trim();
+                    if (title.includes('技术优势') || title.includes('Technical Advantages') || title.includes('Технические преимущества')) {
+                        advantageCardsContainer = container;
+                    }
+                }
+            });
+            
+            if (advantageCardsContainer) {
+                // 找到网格容器
+                const gridDiv = advantageCardsContainer.querySelector('.grid');
+                if (gridDiv) {
+                    // 获取网格容器内的所有直接子div（即卡片）
+                    const allDivs = gridDiv.children;
+                    const advantageCards = [];
+                    
+                    // 过滤出包含h4和p元素的卡片
+                    for (let i = 0; i < allDivs.length; i++) {
+                        const div = allDivs[i];
+                        if (div.querySelector('h4') && div.querySelector('p')) {
+                            advantageCards.push(div);
+                        }
+                    }
+                    
+                    // 确保我们有至少3张卡片
+                    if (advantageCards.length >= 3) {
+                        // 更新每张卡片，添加详细的空值检查
+                        // 第一张卡片
+                        const card1 = advantageCards[0];
+                        const h4_1 = card1.querySelector('h4');
+                        const p_1 = card1.querySelector('p');
+                        if (h4_1) h4_1.textContent = resources.fullAutomation;
+                        if (p_1) p_1.textContent = resources.automationText;
+                        
+                        // 第二张卡片
+                        const card2 = advantageCards[1];
+                        const h4_2 = card2.querySelector('h4');
+                        const p_2 = card2.querySelector('p');
+                        if (h4_2) h4_2.textContent = resources.localModel;
+                        if (p_2) p_2.textContent = resources.modelText;
+                        
+                        // 第三张卡片
+                        const card3 = advantageCards[2];
+                        const h4_3 = card3.querySelector('h4');
+                        const p_3 = card3.querySelector('p');
+                        if (h4_3) h4_3.textContent = resources.crossPlatform;
+                        if (p_3) p_3.textContent = resources.platformText;
+                    }
+                }
+            }
+            
+            // 更新适用场景
+            document.querySelector('#scenes h2').textContent = resources.scenesTitle;
+            const sceneCards = document.querySelectorAll('#scenes .glassmorphism');
+            if (sceneCards.length >= 3) {
+                sceneCards[0].querySelector('h3').textContent = resources.scene1Title;
+                sceneCards[0].querySelector('p').textContent = resources.scene1Text;
+                sceneCards[1].querySelector('h3').textContent = resources.scene2Title;
+                sceneCards[1].querySelector('p').textContent = resources.scene2Text;
+                sceneCards[2].querySelector('h3').textContent = resources.scene3Title;
+                sceneCards[2].querySelector('p').textContent = resources.scene3Text;
+            }
+            
+            // 更新团队介绍
+            document.querySelector('#team h2').textContent = resources.teamTitle;
+            const teamCards = document.querySelectorAll('#team .team-card');
+            if (teamCards.length >= 4) {
+                // 刘亦
+                teamCards[0].querySelector('h3').textContent = resources.member1Name;
+                teamCards[0].querySelector('p').textContent = resources.member1Role;
+                teamCards[0].querySelectorAll('li').forEach((li, index) => {
+                    const text = li.querySelector('span');
+                    if (index === 0) text.textContent = resources.member1Text1;
+                    else if (index === 1) text.textContent = resources.member1Text2;
+                    else if (index === 2) text.textContent = resources.member1Text3;
+                    else if (index === 3) text.textContent = resources.member1Text4;
+                });
+                // 徐明羽
+                teamCards[1].querySelector('h3').textContent = resources.member2Name;
+                teamCards[1].querySelector('p').textContent = resources.member2Role;
+                teamCards[1].querySelectorAll('li').forEach((li, index) => {
+                    const text = li.querySelector('span');
+                    if (index === 0) text.textContent = resources.member2Text1;
+                    else if (index === 1) text.textContent = resources.member2Text2;
+                    else if (index === 2) text.textContent = resources.member2Text3;
+                    else if (index === 3) text.textContent = resources.member2Text4;
+                });
+                // 林乐艺
+                teamCards[2].querySelector('h3').textContent = resources.member3Name;
+                teamCards[2].querySelector('p').textContent = resources.member3Role;
+                teamCards[2].querySelectorAll('li').forEach((li, index) => {
+                    const text = li.querySelector('span');
+                    if (index === 0) text.textContent = resources.member3Text1;
+                    else if (index === 1) text.textContent = resources.member3Text2;
+                    else if (index === 2) text.textContent = resources.member3Text3;
+                });
+                // 闫梦圆
+                teamCards[3].querySelector('h3').textContent = resources.member4Name;
+                teamCards[3].querySelector('p').textContent = resources.member4Role;
+                teamCards[3].querySelectorAll('li').forEach((li, index) => {
+                    const text = li.querySelector('span');
+                    if (index === 0) text.textContent = resources.member4Text1;
+                    else if (index === 1) text.textContent = resources.member4Text2;
+                    else if (index === 2) text.textContent = resources.member4Text3;
+                });
+            }
+            
+            // 更新团队成果标题
+            // 选择团队成果展示部分（所有团队成员卡片之后的.glassmorphism容器）
+            const allTeamCards = document.querySelectorAll('#team .team-card');
+            if (allTeamCards.length > 0) {
+                const teamAchievementsSection = allTeamCards[allTeamCards.length - 1].nextElementSibling;
+                if (teamAchievementsSection && teamAchievementsSection.classList.contains('glassmorphism')) {
+                    const achievementsTitle = teamAchievementsSection.querySelector('h3');
+                    if (achievementsTitle) {
+                        achievementsTitle.textContent = resources.teamAchievements;
+                    }
+                }
+            }
+            
+            // 更新数据标签
+            const dataPills = document.querySelectorAll('.data-pill');
+            dataPills.forEach(pill => {
+                // 获取图标元素
+                const iconElement = pill.querySelector('i');
+                const iconClass = iconElement ? iconElement.className : '';
+                
+                // 确定当前数据标签的类型（根据图标或位置）
+                let pillType = '';
+                if (iconClass.includes('fa-bolt')) pillType = 'efficiency';
+                else if (iconClass.includes('fa-star')) pillType = 'potential';
+                else if (iconClass.includes('fa-tachometer-alt') || iconClass.includes('fa-gauge-high')) pillType = 'speed';
+                else if (iconClass.includes('fa-palette')) pillType = 'style';
+                else if (iconClass.includes('fa-language')) pillType = 'nlp';
+                else if (iconClass.includes('fa-bolt')) pillType = 'listingSpeed';
+                else if (iconClass.includes('fa-clock')) pillType = 'serviceTime';
+                else if (iconClass.includes('fa-comments')) pillType = 'language';
+                else if (iconClass.includes('fa-chart-line')) pillType = 'realtime';
+                else if (iconClass.includes('fa-file-invoice-dollar')) pillType = 'profit';
+                else if (iconClass.includes('fa-images')) pillType = 'imageAutomation';
+                else if (iconClass.includes('fa-sitemap')) pillType = 'workflow';
+                else if (iconClass.includes('fa-robot')) pillType = 'multimodal';
+                else if (iconClass.includes('fa-cogs')) pillType = 'orchestration';
+                else if (iconClass.includes('fa-project-diagram')) pillType = 'unmanned';
+                else if (iconClass.includes('fa-plug')) pillType = 'crossplatform';
+                
+                // 根据类型直接从资源中获取翻译文本
+                let translatedText = '';
+                switch(pillType) {
+                    case 'efficiency':
+                        translatedText = resources.efficiencyPill;
+                        break;
+                    case 'potential':
+                        translatedText = resources.potentialPill;
+                        break;
+                    case 'speed':
+                        translatedText = resources.speedPill;
+                        break;
+                    case 'style':
+                        translatedText = resources.stylePill;
+                        break;
+                    case 'nlp':
+                        translatedText = resources.nlpPill;
+                        break;
+                    case 'listingSpeed':
+                        translatedText = resources.listingSpeedPill;
+                        break;
+                    case 'serviceTime':
+                        translatedText = resources.serviceTimePill;
+                        break;
+                    case 'language':
+                        translatedText = resources.languagePill;
+                        break;
+                    case 'realtime':
+                        translatedText = resources.realtimePill;
+                        break;
+                    case 'profit':
+                        translatedText = resources.profitPill;
+                        break;
+                    case 'imageAutomation':
+                        translatedText = resources.imageAutomationPill;
+                        break;
+                    case 'workflow':
+                        translatedText = resources.workflowPill;
+                        break;
+                    case 'multimodal':
+                        translatedText = resources.multimodalPill;
+                        break;
+                    case 'orchestration':
+                        translatedText = resources.orchestrationPill;
+                        break;
+                    case 'unmanned':
+                        translatedText = resources.unmannedPill;
+                        break;
+                    case 'crossplatform':
+                        translatedText = resources.crossplatformPill;
+                        break;
+                    default:
+                        // 如果无法确定类型，尝试根据文本内容匹配
+                        const currentText = pill.textContent.trim();
+                        switch(currentText) {
+                            case '效率提升2倍':
+                            case 'Efficiency increased by 2x':
+                            case 'Эффективность увеличена в 2 раза':
+                                translatedText = resources.efficiencyPill;
+                                break;
+                            case '高潜力商品':
+                            case 'High potential products':
+                            case 'Товары с высоким потенциалом':
+                                translatedText = resources.potentialPill;
+                                break;
+                            case '效率提升48倍':
+                            case 'Efficiency increased by 48x':
+                            case 'Эффективность увеличена в 48 раз':
+                                translatedText = resources.speedPill;
+                                break;
+                            case '多风格模板':
+                            case 'Multi-style templates':
+                            case 'Многостильные шаблоны':
+                                translatedText = resources.stylePill;
+                                break;
+                            case '俄语NLP':
+                            case 'Russian NLP':
+                            case 'Русский NLP':
+                                translatedText = resources.nlpPill;
+                                break;
+                            case '效率提升10倍':
+                            case 'Efficiency increased by 10x':
+                            case 'Эффективность увеличена в 10 раз':
+                                translatedText = resources.listingSpeedPill;
+                                break;
+                            case '7×24小时':
+                            case '24/7':
+                            case '7×24 часа':
+                                translatedText = resources.serviceTimePill;
+                                break;
+                            case '中俄双语':
+                            case 'Chinese-Russian bilingual':
+                            case 'Китайско-русский двуязычный':
+                                translatedText = resources.languagePill;
+                                break;
+                            case '实时监控':
+                            case 'Real-time monitoring':
+                            case 'Мониторинг в реальном времени':
+                                translatedText = resources.realtimePill;
+                                break;
+                            case '利润核算':
+                            case 'Profit calculation':
+                            case 'Расчет прибыли':
+                                translatedText = resources.profitPill;
+                                break;
+                            case '图像自动化':
+                            case 'Image automation':
+                            case 'Автоматизация изображений':
+                                translatedText = resources.imageAutomationPill;
+                                break;
+                            case '节点式工作流':
+                            case 'Node-based workflow':
+                            case 'Workflow на основе узлов':
+                                translatedText = resources.workflowPill;
+                                break;
+                            case '多模态AI':
+                            case 'Multi-modal AI':
+                            case 'Мультимодальный AI':
+                                translatedText = resources.multimodalPill;
+                                break;
+                            case '流程编排':
+                            case 'Process orchestration':
+                            case 'Оркестрация процессов':
+                                translatedText = resources.orchestrationPill;
+                                break;
+                            case '无人化处理':
+                            case 'Unmanned processing':
+                            case 'Безлюдное обработка':
+                                translatedText = resources.unmannedPill;
+                                break;
+                            case '跨平台支持':
+                            case 'Cross-platform support':
+                            case 'Поддержка кросс-платформенная':
+                                translatedText = resources.crossplatformPill;
+                                break;
+                            default:
+                                translatedText = pill.textContent.trim();
+                        }
+                }
+                
+                // 更新数据标签内容
+                if (iconElement) {
+                    pill.innerHTML = `<i class="${iconClass}"></i> ${translatedText}`;
+                } else {
+                    pill.textContent = translatedText;
+                }
+            });
+            
+            // 更新页脚
+            document.querySelector('footer p:nth-of-type(1)').textContent = resources.footerText;
+            // 更新页脚内容
+            const footerPs = document.querySelectorAll('footer p');
+            if (footerPs.length >= 2) {
+                // 更新GitHub链接文本
+                const footerLinks = document.querySelectorAll('footer a');
+                if (footerLinks.length >= 1) {
+                    const githubText = `${resources.github} <a href="${footerLinks[0].href}" class="text-white underline" target="_blank">${footerLinks[0].textContent}</a>`;
+                    footerPs[1].innerHTML = githubText;
+                }
+                // 更新页面信息
+                if (footerPs.length >= 3) {
+                    footerPs[2].textContent = resources.pageInfo;
+                }
+            }
+        }
+        
         // 添加滚动动画效果
         document.addEventListener('DOMContentLoaded', function() {
+            // 初始化粒子特效
+            initParticles();
+            
+            // 初始化页面内容
+            updateContent();
+            
             // 平滑滚动
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
@@ -752,6 +1903,43 @@
                     nav.classList.remove('shadow-md');
                 }
             });
+            
+            // 语言切换功能
+            const languageToggle = document.getElementById('languageToggle');
+            const languageMenu = document.getElementById('languageMenu');
+            const languageOptions = document.querySelectorAll('.language-option');
+            
+            if (languageToggle && languageMenu) {
+                languageToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    languageMenu.classList.toggle('hidden');
+                });
+                
+                // 点击语言选项
+                languageOptions.forEach(option => {
+                    option.addEventListener('click', function() {
+                        const lang = this.getAttribute('data-lang');
+                        changeLanguage(lang);
+                    });
+                });
+                
+                // 点击页面其他区域关闭语言菜单
+                document.addEventListener('click', function() {
+                    languageMenu.classList.add('hidden');
+                });
+            }
+            
+            // 移动端语言切换
+            const mobileLanguageToggle = document.getElementById('mobileLanguageToggle');
+            if (mobileLanguageToggle) {
+                mobileLanguageToggle.addEventListener('click', function() {
+                    // 循环切换语言
+                    const languages = ['zh', 'ru', 'en'];
+                    const currentIndex = languages.indexOf(currentLanguage);
+                    const nextIndex = (currentIndex + 1) % languages.length;
+                    changeLanguage(languages[nextIndex]);
+                });
+            }
         });
     </script>
 </body>
